@@ -8,8 +8,10 @@ import { FaUsersGear } from "react-icons/fa6";
 import ViewUserCard from './ViewUserCard';
 import Updateuser from './Updateuser';
 import RoleAssignment from './RoleAssignment';
+import { toast } from 'react-hot-toast';
 
 export default function GetModify() {
+ 
   const { users, setUsers } = useContext(UserContext); // Destructure setUsers from UserContext
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
@@ -56,6 +58,21 @@ export default function GetModify() {
     const query = searchQuery.toLowerCase();
     return fullName.includes(query) || email.includes(query) || mobile_number.includes(query);
   });
+  
+  const handleDeleteUser = async (userId) => {
+    try {
+      await axios.delete(`/deleteuser/${userId}`);
+
+      //after deletion, i want refresh my user list
+      const response = await axios.get('/getusers');
+      setUsers(response.data);
+
+      toast.success( 'Deleted Successsfully')
+    }catch (error) {
+      console.error('Error deleting user:', error);
+    }
+  };
+  
 
   return (
     <div>
@@ -118,7 +135,7 @@ export default function GetModify() {
                 </td>
                 <td>
                   <div className="ml-[50px] pr-[30px]">
-                    <button >
+                    <button onClick ={() => handleDeleteUser(user._id)} >
                       <h1 className='text-red-500'>
                         <MdDeleteForever className="size-[35px]  hover:size-[35px] hover:opacity-35  " />  
                       </h1>

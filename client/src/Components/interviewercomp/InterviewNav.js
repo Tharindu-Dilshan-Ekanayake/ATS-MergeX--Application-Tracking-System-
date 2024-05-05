@@ -8,7 +8,7 @@ import { FaFileSignature } from 'react-icons/fa';
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { CiLogout } from 'react-icons/ci';
 import { MdMessage } from 'react-icons/md';
-import proImg from '../../Images/pro1.png'
+//import proImg from '../../Images/pro1.png'
 
 export default function InterviewNav() {
     const [activeItem, setActiveItem] = useState(null);
@@ -46,13 +46,13 @@ export default function InterviewNav() {
             <div className='pt-12'>
                 <div className='flex items-center justify-center'>
                     <div className='items-center block '>
-                        <img src={proImg} alt='hi' className='rounded-full border-[2px] w-[250px] h-[250px]' />
+                    {!!user && <img src={user.image} alt='hi' className='rounded-full border-[2px] w-[250px] h-[250px]' />}
                     </div>
                 </div>
 
                 <div className='pt-4 pb-8'>
-                    <h1> Mudusaritha Gangamina</h1>
-                    <h1> Interviewer </h1>
+                {!!user && <h1> {user?.fname} {user?.lname}</h1>}
+                    {!!user && <h1 className='opacity-40'> {user.role} </h1>}
                 </div>
             </div>
 

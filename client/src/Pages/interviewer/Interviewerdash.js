@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Logout from '../../Components/Logout';
+//import Logout from '../../Components/Logout';
 import { UserContext } from '../../Context/UserContext';
 import InterviewNav from '../../Components/interviewercomp/InterviewNav'
 import './custom.css';
@@ -17,6 +17,7 @@ export default function Interviewerdash() {
         </div>
         <div>
           <Header/>
+          <h1>{user.lname}</h1>
         </div>
       </div>
     </div>

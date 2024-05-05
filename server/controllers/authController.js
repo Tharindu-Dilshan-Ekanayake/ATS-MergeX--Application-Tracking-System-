@@ -194,6 +194,25 @@ const updateUser = async (req, res) => {
     }
   };
 
+  //delete user
+
+  const deleteUser = async (req, res) => {
+    const userId = req.params.userId;
+
+    try{
+        const deleteUser = await User.findByIdAndDelete(userId);
+
+        if(!deleteUser) {
+            return res.status(404).json({error: "User not found"});
+        }
+
+        res.status(200).json({message: "User deleted Successfully"});
+    }catch (error) {
+        console.error('Error deleting user:' , error);
+        res.status(500).json({ error: 'Failed to delete user. Please try again later.' });
+    }
+  };
+
 
 
 
@@ -203,7 +222,8 @@ module.exports = {
     loginUser,
     getusers,
     getprofile,
-    updateUser
+    updateUser,
+    deleteUser
    
 
   

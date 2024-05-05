@@ -76,37 +76,37 @@ const EditProfile = () => {
   }
 
   return (
-    <div className='flex justify-center items-center  h-full '>
-      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col text-neutral-900 w-3/5 gap-1 justify-start mt-8 bg-neutral-800 py-1 items-center h-5/6'>
-        <div className='flex justify-around w-full bg-neutral-800 px-1 items-start'>
-          <div className='flex flex-col bg-neutral-800 w-2/5  justify-center gap-1'>
+    <div className='flex items-center justify-center h-full '>
+      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col items-center justify-start w-3/5 gap-1 py-1 mt-8 text-neutral-900 bg-neutral-800 h-5/6'>
+        <div className='flex items-start justify-around w-full px-1 bg-neutral-800'>
+          <div className='flex flex-col justify-center w-2/5 gap-1 bg-neutral-800'>
 
             <input type="text" placeholder='FirstName' {...register("firstName")} 
-            className='bg-amber-800 bg-opacity-15 border-orange-700 border-2 px-3 py-2 rounded-2xl text-white focus:outline-none  focus:bg-neutral-100 focus:bg-opacity-25 transition duration-200'/>
+            className='px-3 py-2 text-white transition duration-200 border-2 border-orange-700 bg-amber-800 bg-opacity-15 rounded-2xl focus:outline-none focus:bg-neutral-100 focus:bg-opacity-25'/>
                 <p className='text-red-500'>{errors.firstName?.message}</p>
 
             <input type="text" placeholder='SecondName' {...register("secondName")} 
-            className='bg-amber-800 bg-opacity-15 border-orange-700 border-2 px-3 py-2 rounded-2xl text-white focus:outline-none  focus:bg-neutral-100 focus:bg-opacity-25 transition duration-200'/>
+            className='px-3 py-2 text-white transition duration-200 border-2 border-orange-700 bg-amber-800 bg-opacity-15 rounded-2xl focus:outline-none focus:bg-neutral-100 focus:bg-opacity-25'/>
                 <p className='text-red-500'>{errors.secondName?.message}</p>
 
             <input type="email" placeholder='Email' {...register("email")} 
-             className='bg-amber-800 bg-opacity-15 border-orange-700 border-2 px-3 py-2 rounded-2xl text-white focus:outline-none  focus:bg-neutral-100 focus:bg-opacity-25 transition duration-200'/>
+             className='px-3 py-2 text-white transition duration-200 border-2 border-orange-700 bg-amber-800 bg-opacity-15 rounded-2xl focus:outline-none focus:bg-neutral-100 focus:bg-opacity-25'/>
                 <p className='text-red-500'>{errors.email?.message}</p>
 
             <input type="tel" placeholder='Telephone' {...register("telephone")} 
-             className='bg-amber-800 bg-opacity-15 border-orange-700 border-2 px-3 py-2 rounded-2xl text-white focus:outline-none  focus:bg-neutral-100 focus:bg-opacity-25 transition duration-200'/>
+             className='px-3 py-2 text-white transition duration-200 border-2 border-orange-700 bg-amber-800 bg-opacity-15 rounded-2xl focus:outline-none focus:bg-neutral-100 focus:bg-opacity-25'/>
                 <p className='text-red-500'>{errors.telephone?.message}</p>
 
             <input type="text" placeholder='Age' {...register("age")} 
-             className='bg-amber-800 bg-opacity-15 border-orange-700 border-2 px-3 py-2 rounded-2xl text-white focus:outline-none  focus:bg-neutral-100 focus:bg-opacity-25 transition duration-200'/>
+             className='px-3 py-2 text-white transition duration-200 border-2 border-orange-700 bg-amber-800 bg-opacity-15 rounded-2xl focus:outline-none focus:bg-neutral-100 focus:bg-opacity-25'/>
                 <p className='text-red-500'>{errors.age?.message}</p>
 
             <input type="date" placeholder='Date of Birth' {...register("dob")} 
-             className='bg-amber-800 bg-opacity-15 border-orange-700 border-2 px-3 py-2 rounded-2xl text-white focus:outline-none  focus:bg-neutral-100 focus:bg-opacity-25 transition duration-200'/>
+             className='px-3 py-2 text-white transition duration-200 border-2 border-orange-700 bg-amber-800 bg-opacity-15 rounded-2xl focus:outline-none focus:bg-neutral-100 focus:bg-opacity-25'/>
                 <p className='text-red-500'>{errors.dob?.message}</p>
 
             <div className='container flex gap-2'>
-              <label className='text-white genderLabel border-orange-700 border-2 rounded-2xl w-3/12' for='male'> Male
+              <label className='w-3/12 text-white border-2 border-orange-700 genderLabel rounded-2xl' for='male'> Male
                 <input type="radio" value="male" {...register("gender")} className='gender' id='male'/>
               </label>
               
@@ -124,17 +124,17 @@ const EditProfile = () => {
           <AvatarDP/>
         </div>
         
-        <div className=' py-1 px-1 w-5/6'>
+        <div className='w-5/6 px-1 py-1 '>
           <label className='flex flex-col items-start text-white '>
             Education
-            <textarea className='text-neutral-900 w-full bg-amber-800 bg-opacity-15 border-orange-700 border-2 rounded-2xl resize-none indent-5 pt-2' 
+            <textarea className='w-full pt-2 border-2 border-orange-700 resize-none text-neutral-900 bg-amber-800 bg-opacity-15 rounded-2xl indent-5' 
             placeholder='Education Qualification' {...register("education")} /> 
           </label>
               <p className='text-red-500'>{errors.education?.message}</p>
 
             <label className='flex flex-col items-start text-white'>
               Description
-              <textarea className='text-neutral-900 w-full bg-amber-800 bg-opacity-15 border-orange-700 border-2 rounded-2xl resize-none indent-5 pt-2' 
+              <textarea className='w-full pt-2 border-2 border-orange-700 resize-none text-neutral-900 bg-amber-800 bg-opacity-15 rounded-2xl indent-5' 
               placeholder='I am SystemChanger' {...register("description")} /> 
             </label>
               <p className='text-red-500'>{errors.description?.message}</p>
