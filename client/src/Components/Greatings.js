@@ -9,15 +9,15 @@ export default function Greatings() {
 
     if(currentTime >= 0 && currentTime <= 12)
     {
-        greeting = "Good Morning !";
+        greeting = "Good Morning ! ";
     }
     else if(currentTime >12 && currentTime< 14)
     {
-        greeting = "Good Afternoon !"
+        greeting = "Good Afternoon ! "
     }
     else
     {
-        greeting = "Good Evening !"
+        greeting = "Good Evening ! "
     }
 
 

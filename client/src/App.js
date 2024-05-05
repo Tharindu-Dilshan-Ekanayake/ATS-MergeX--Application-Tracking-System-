@@ -49,6 +49,12 @@ import Interview from './Pages/interviewer/InterviewPage';
 import Feedbacksubmission from './Pages/interviewer/FeedbackSubmission';
 import Scheduling from './Pages/interviewer/Scheduling';
 import InterviewMessage from './Pages/interviewer/Message';
+import Dashboard from './Pages/hiring manager/Dashboard';
+import HiringDecision from './Pages/hiring manager/HiringDecision';
+import JobApproval from './Pages/hiring manager/JobApproval';
+import InterviewFeedback from './Pages/hiring manager/InterviewFeedback';
+import Reporting from './Pages/hiring manager/Reporting';
+import JobCard from './Components/hiringManagerComp/JobCard';
 
 axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.withCredentials = true
@@ -65,7 +71,7 @@ function App() {
       <Toaster position='bottom-right' toastOptions={{duration: 3000}}></Toaster>
       
         <Routes>
-          
+          <Route path='/jobcard' element={<JobCard/>}></Route>
           <Route  path='/'element={<Login/>}> </Route>
           <Route  path='/forget'element={<ForgetPassword/>}> </Route>
           <Route  path='/changepassword'element={<ChangePw/>}> </Route>
@@ -89,7 +95,7 @@ function App() {
           <Route path='/scheduling' element={<Scheduling/>}></Route>
           <Route path='/message' element={<InterviewMessage/>}></Route>
 
-          <Route path='/hiringmanagerdash'element={<Hiringmanagerdash/>}></Route>
+          <Route path='/hiringmanagerdash'element={<Dashboard/>}></Route>
 
           <Route path='/candidatedash' element={<Candidatedash/>}>
             <Route path='editProfile' element={<EditProfile/>} />
@@ -108,6 +114,17 @@ function App() {
           <Route path='/adminsystemsettings' element={<SystemSettings/>}/>
 
           <Route path = '/userdetails' element={<ViewUserCard/>}/>
+         
+          
+        <Route path='/hiringdecision' element={<HiringDecision/>}></Route> 
+        <Route path='/jobapproval' element={<JobApproval/>}></Route>
+        <Route path='/hiringmanagerinterviewfeedback' element={<InterviewFeedback/>}></Route>
+        <Route path='/reporting' element={<Reporting/>}></Route>
+      {/*  
+        
+        <Route path='/hiringmanagermessage' element={<HiringManagerMessage/>}></Route>
+         */}
+
         </Routes>
 
         </UserContextProvider>
