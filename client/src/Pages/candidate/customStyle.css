@@ -49,6 +49,45 @@ input[type="file"]::-webkit-file-upload-button {
   cursor: pointer;
 }
 
+body {
+	background: #595B5D;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+  background-attachment: fixed;
+}
+
+/* dark mode looking scrollbar */
+
+::-webkit-scrollbar {
+	width: 2px;
+}
+
+::-webkit-scrollbar-track {
+	background: #555;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #099B28;
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #242424;
+}
+
+/* styles defined in index.css will be available to all components in the application, regardless of whether they import the CSS file or not.
+
+
+ This global styling approach is commonly used for defining base styles, 
+ such as default font styles, color schemes, or global layout configurations, 
+ that are applied consistently across all components in the application.  
+
+*/
+
+
+
+
 
 
 

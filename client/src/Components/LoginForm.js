@@ -26,12 +26,14 @@ function LoginForm() {
         password
       });
       const userData = response.data;
+      localStorage.setItem("chat-user", JSON.stringify(userData.user));
+
       if (userData.error) {
         toast.error(userData.error);
       } else {
         setData({ email: '', password: '' }); // Clear input fields
         setUser(userData); // Set user data in context
-        const role = userData.role; // Extract role from response data
+        const role = userData.user.role; // Extract role from response data
         
         // Redirect based on role
         switch (role) {

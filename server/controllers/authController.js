@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { hashPassword, comparePassword } = require('../helpers/auth');
 const UserModel = require('../models/user');
+const generateTokenAndSetCookie = require('../utils/generateToken');
 
 //const multer = require('multer')
 
@@ -44,10 +45,24 @@ const registerUser = async (req, res) => {
             });
         }
 
+        let profilePic;
+        if (!image) {
+            if (gender === 'male') {
+                profilePic = `https://avatar.iran.liara.run/public/boy?username=${fname}${lname}`;
+            } else if (gender === 'female') {
+                profilePic = `https://avatar.iran.liara.run/public/girl?username=${fname}${lname}`;
+            } else {
+                // For other genders, you can assign a generic default picture or handle differently
+                profilePic = '';
+            }
+        } else {
+            profilePic = image; // Use provided image
+        }
+
         const hashedPassword = await hashPassword(password);
 
         // Create user in the database
-        const user = await User.create({
+        const newUser = new User({
             fname,
             lname,
             email,
@@ -61,9 +76,24 @@ const registerUser = async (req, res) => {
             image,
         });
 
-        return res.json(user);
+        if(newUser) {
+            // generateTokenAndSetCookie(newUser.email, newUser.id, newUser.fname, res);
+            await newUser.save();
+        // Return only necessary data and exclude sensitive information
+            const responseData = {
+                _id: newUser.id,
+                fname: newUser.fname,
+                lname: newUser.lname,
+                email: newUser.email,
+                role: newUser.role,
+            };
+            return res.status(201).json(responseData);
+        } else {
+			res.status(400).json({ error: "Invalid user data" });
+		}
+
     } catch (error) {
-        console.log(error);
+        console.log("Error in signup controller", error.message);
         return res.status(500).json({ error: 'Server error' });
     }
 };
@@ -75,27 +105,29 @@ const loginUser = async (req, res) => {
 
         // Check if user exists
         const user = await User.findOne({ email });
-        if (!user) {
-            return res.json({
-                error: 'No user found'
-            });
-        }
-
-        // Compare passwords
         const match = await comparePassword(password, user.password);
-        if (match) {
-            //return res.json('Password match');
-            jwt.sign({ id: user._id,fname: user.fname, lname: user.lname ,gender: user.gender, dob: user.dob, role : user.role  },process.env.REACT_APP_JWT_SECRET, {}, (err,token) => {
-                if(err) throw err;
-                res.cookie('token',token).json(user)
-            })
-        } else {
-            return res.json({ error: 'Incorrect password' });
+        
+        if (!user || !match) {
+            return res.status(400).json({ error: "Invalid username or password" });
         }
 
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ error: 'Server error' });
+        generateTokenAndSetCookie(user.email, user.id, user.fname, res); 
+            
+        res.status(200).json({
+            message: 'Login successful',
+            user: {
+                _id: user._id,
+                fname: user.fname,
+                lname: user.lname,
+                email: user.email,
+                role: user.role,
+                image: user.image,
+            },
+        });
+
+    }catch (error) {
+      console.log("Error in login controller", error.message);
+	  res.status(500).json({ error: "Internal Server Error" });
     }
 };
 
