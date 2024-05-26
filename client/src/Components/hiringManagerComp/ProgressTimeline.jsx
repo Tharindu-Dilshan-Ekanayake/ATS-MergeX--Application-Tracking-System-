@@ -1,65 +1,100 @@
-import * as React from 'react';
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineDot from '@mui/lab/TimelineDot';
+import React from 'react';
 
-export default function ProgressTimeline() {
-    let a=4;
-  return ( 
-    <div className='m-[100px] '>
-     
-      <Timeline position="right">
-        <TimelineItem>
-          <TimelineSeparator >
-          <TimelineDot className='' style={{ boxShadow: a === 0 || a === 1 || a === 2 || a === 3 ||a ===4 ? '0 0 0 2px #EA7122' : '0 0 0 0 #616161',borderRadius: '50%', backgroundColor: a === 0 || a === 1 || a === 2 || a === 3 ||a ===4 ? '#1a1a1a' : "#616161" }}/>
-            <TimelineConnector className='' style={{ backgroundColor: a===1 ||a===2 || a===3 || a===4? '#EA7122':'#616161'}}/>
-          </TimelineSeparator> 
-          <TimelineContent className='320px:text-[0.5rem]  450px:text-[0.8rem] sm:text-[0.9rem]  900px:text-[1.1rem]  1010px:text-[1.2rem] justify-around '  style={{  display:'flex '}}> Invitation Sent  <p className='text-[#ffffff] opacity-[30%]  1010px:mr-[30%] mt-[1px] items-start 320px:text-[0.4rem]  450px:text-[0.6rem] sm:text-[0.7rem]  900px:text-[0.9rem]  1010px:text-[1rem]'>2024-03-21</p></TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineDot className=''  style={{ boxShadow:  a === 1 || a === 2 || a === 3 || a===4? '0 0 0 2px #EA7122' : '0 0 0 0 #616161',borderRadius: '50%', backgroundColor: a === 1 || a === 2 || a === 3 ||a ===4 ? '#1a1a1a' : "#616161"}} />
-            <TimelineConnector className='' style={{ backgroundColor: a===2 || a===3 || a===4? '#EA7122':'#616161'}} />
-          </TimelineSeparator>
-          <TimelineContent className='320px:text-[0.5rem]  450px:text-[0.8rem] sm:text-[0.9rem]  900px:text-[1.1rem]  1010px:text-[1.2rem] justify-around' style={{  display:'flex' }}>Follow Up Sent <p className='text-[#616161] 1010px:mr-[30%] mt-[1px] items-start 320px:text-[0.4rem]  450px:text-[0.6rem] sm:text-[0.7rem]  900px:text-[0.9rem]  1010px:text-[1rem]'>2024-03-21</p></TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineDot className=''  style={{ boxShadow: a === 2 || a === 3 || a===4  ? '0 0 0 2px #EA7122' : '0 0 0 0 #616161',borderRadius: '50%',backgroundColor:  a === 2 || a === 3 ||a ===4 ? '#1a1a1a' : "#616161"}} />
-            <TimelineConnector className='' style={{ backgroundColor: a===3 || a===4? '#EA7122':'#616161'}} />
-          </TimelineSeparator>
-          <TimelineContent className='320px:text-[0.5rem]  450px:text-[0.8rem] sm:text-[0.9rem]  900px:text-[1.1rem]  1010px:text-[1.2rem] justify-around' style={{  display:'flex' }}>Interview Sheduled <p className='text-[#616161]  1010px:mr-[30%] mt-[1px] items-start 320px:text-[0.4rem]  450px:text-[0.6rem] sm:text-[0.7rem]  900px:text-[0.9rem]  1010px:text-[1rem]'>2024-03-21</p></TimelineContent>
-        </TimelineItem>
-         <TimelineItem>
-          <TimelineSeparator >
-          <TimelineDot className='' style={{ boxShadow: a === 3 ||a ===4 ? '0 0 0 2px #EA7122' : '0 0 0 0 #616161',borderRadius: '50%',backgroundColor: a === 3 ||a ===4 ? '#1a1a1a' : "#616161"}}/>
-            <TimelineConnector className=''  style={{ backgroundColor: a===4? '#EA7122':'#616161'}} />
-          </TimelineSeparator> 
-          <TimelineContent className='320px:text-[0.5rem]  450px:text-[0.8rem] sm:text-[0.9rem]  900px:text-[1.1rem]  1010px:text-[1.2rem] justify-around '  style={{  display:'flex '}}> Faced Interview  <p className='text-[#616161] 1010px:mr-[30%] mt-[1px] items-start 320px:text-[0.4rem]  450px:text-[0.6rem] sm:text-[0.7rem]  900px:text-[0.9rem]  1010px:text-[1rem]'>2024-03-21</p></TimelineContent>
-        </TimelineItem>
-        
-        <TimelineItem>
-          <TimelineSeparator >
-            <TimelineDot className='' style={{ boxShadow:  a===4 ? '0 0 0 2px #EA7122' : '0 0 0 0 #616161',borderRadius: '50%',backgroundColor: a ===4 ? '#1a1a1a' : "#616161"}} />
-          </TimelineSeparator>
-          <TimelineContent className='320px:text-[0.5rem]  450px:text-[0.8rem] sm:text-[0.9rem]  900px:text-[1.1rem]  1010px:text-[1.2rem] justify-around'  style={{  display:'flex' }}>Waiting For Comments<p className='text-[#616161] 1010px:mr-[30%] mt-[1px] items-start 320px:text-[0.4rem]  450px:text-[0.6rem] sm:text-[0.7rem]  900px:text-[0.9rem]  1010px:text-[1rem]'>2024-03-21</p></TimelineContent>
-        </TimelineItem>
-       
-      </Timeline>
+const ProgressTimeline = () => {
+  let a=1;
 
-      <style>
-                {`
-                .css-1ms7hib-MuiTimelineItem-root::before{
-                   flex:0;
-                }
-                
+  return (
+    <div className="flex justify-center ">
+    <div >
+      
+        <div  className="flex gap-x-3 ">
+          <div className="w-16 text-end">
+            <span className="text-xs text-gray-500 dark:text-neutral-400">24/12/2023</span>
+          </div>
+          <div className={`relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-[3px] after:-translate-x-[0.5px] after:bg-gray-200 ${ a === 1 || a === 2 || a === 3 ||a ===4 ? ' dark:after:bg-[#eb7323]' : 'dark:after:bg-neutral-700'}`}>
+            <div className="relative z-10 size-7 flex justify-center items-center">
+              <div className={`size-2  ring-[3px]  ${a === 0 || a === 1 || a === 2 || a === 3 ||a ===4 ? 'ring-[#eb7323]' : 'ring-neutral-600'} rounded-full bg-gray-400 dark:bg-neutral-600`}></div>
+            </div>
+          </div>
+          <div className="grow pt-0.5 pb-8">
+            <h3 className="flex gap-x-1.5 font-semibold text-gray-800 dark:text-white">
+            Invitation sent
+            </h3>
+            <button type="button" className="mt-1 -ms-1 p-1 inline-flex items-center gap-x-2 text-xs rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-700">
+            </button>
+          </div>
+        </div>
 
-                `}   
-                </style>
-
+        <div  className="flex gap-x-3 ">
+          <div className="w-16 text-end">
+            <span className="text-xs text-gray-500 dark:text-neutral-400">25/12/2023</span>
+          </div>
+          <div className={`relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-[3px] after:-translate-x-[0.5px] after:bg-gray-200 ${ a === 2 || a === 3 ||a ===4 ? ' dark:after:bg-[#eb7323]' : 'dark:after:bg-neutral-700'}`}>
+            <div className="relative z-10 size-7 flex justify-center items-center">
+              <div className={`size-2  ring-[3px]  ${a === 1 || a === 2 || a === 3 || a===4 ? 'ring-[#eb7323]' : 'ring-neutral-600'} rounded-full bg-gray-400 dark:bg-neutral-600`}></div>
+            </div>
+          </div>
+          <div className="grow pt-0.5 pb-8">
+            <h3 className="flex gap-x-1.5 font-semibold text-gray-800 dark:text-white">
+            Follow up sent
+            </h3>
+            <button type="button" className="mt-1 -ms-1 p-1 inline-flex items-center gap-x-2 text-xs rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-700">
+            </button>
+          </div>
+        </div>
+        <div  className="flex gap-x-3 ">
+          <div className="w-16 text-end">
+            <span className="text-xs text-gray-500 dark:text-neutral-400">27/12/2023</span>
+          </div>
+          <div className={`relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-[3px] after:-translate-x-[0.5px] after:bg-gray-200 ${ a === 3 || a===4 ? ' dark:after:bg-[#eb7323]' : 'dark:after:bg-neutral-700'}`}>
+            <div className="relative z-10 size-7 flex justify-center items-center">
+              <div className={`size-2  ring-[3px]  ${a === 2 || a === 3 || a===4 ? 'ring-[#eb7323]' : 'ring-neutral-600'} rounded-full bg-gray-400 dark:bg-neutral-600`}></div>
+            </div>
+          </div>
+          <div className="grow pt-0.5 pb-8">
+            <h3 className="flex gap-x-1.5 font-semibold text-gray-800 dark:text-white">
+            Interview scheduled
+            </h3>
+            <button type="button" className="mt-1 -ms-1 p-1 inline-flex items-center gap-x-2 text-xs rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-700">
+            </button>
+          </div>
+        </div>
+        <div  className="flex gap-x-3 ">
+          <div className="w-16 text-end">
+          </div>
+          <div className={`relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-[3px] after:-translate-x-[0.5px] after:bg-gray-200 ${a ===4  ? ' dark:after:bg-[#eb7323]' : 'dark:after:bg-neutral-700'}`}>
+            <div className="relative z-10 size-7 flex justify-center items-center">
+              <div className={`size-2  ring-[3px]  ${a === 3 ||a ===4  ? 'ring-[#eb7323]' : 'ring-neutral-600'} rounded-full bg-gray-400 dark:bg-neutral-600`}></div>
+            </div>
+          </div>
+          <div className="grow pt-0.5 pb-8">
+            <h3 className="flex gap-x-1.5 font-semibold text-gray-800 dark:text-white">
+            Faced Interview
+            </h3>
+            <button type="button" className="mt-1 -ms-1 p-1 inline-flex items-center gap-x-2 text-xs rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:bg-neutral-700">
+            </button>
+          </div>
+        </div>
+        <div  className="flex gap-x-3 ">
+          <div className="w-16 text-end">
+           
+          </div>
+          <div className="relative last:after:hidden  dark:after:bg-neutral-700">
+            <div className="relative z-10 size-7 flex justify-center items-center">
+              <div className={`size-2  ring-[3px]  ${a === 4 ? 'ring-[#eb7323]' : 'ring-neutral-600'} rounded-full bg-gray-400 dark:bg-neutral-600`}></div>
+            </div>
+          </div>
+          <div className="grow pt-0.5 pb-8">
+            <h3 className="flex gap-x-1.5 font-semibold text-gray-800 dark:text-white">
+            Waiting for feedback
+            </h3>
+           
+          </div>
+        </div>
+      
+    </div>
     </div>
   );
-}
+};
+
+export default ProgressTimeline;

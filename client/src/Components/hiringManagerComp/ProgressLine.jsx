@@ -1,27 +1,23 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
+import React, { useState, useEffect, useRef } from 'react';
 
 export default function LinearBuffer(props) {
-  const [progress, setProgress] = React.useState(0);
-  const [buffer, setBuffer] = React.useState(10);
+  const [progress, setProgress] = useState(0);
+  const [buffer, setBuffer] = useState(10);
 
-  const progressRef = React.useRef(() => {});
-  React.useEffect(() => {
+  const progressRef = useRef(() => {});
+  useEffect(() => {
     progressRef.current = () => {
       if (progress > 100) {
         setProgress(0);
         setBuffer(10);
       } else {
-        const diff = Math.random() * 10;
-        const diff2 = Math.random() * 10;
         setProgress(props.progress);
         setBuffer(props.buffer);
       }
     };
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timer = setInterval(() => {
       progressRef.current();
     }, 500);
@@ -35,22 +31,12 @@ export default function LinearBuffer(props) {
   const progressPercentage = Math.round((progress / 100) * 100);
 
   return (
-    <Box sx={{ position: 'relative', width: '100%' }}>
-      <LinearProgress
-        variant="buffer"
-        value={progress}
-        valueBuffer={buffer}
-        sx={{
-          '.css-qhoknl-MuiLinearProgress-bar1': {
-            backgroundColor: '#EA7122', // Change the color of the progress bar
-            
-          },
-          '.css-1qdnzt4-MuiLinearProgress-bar2': {
-            backgroundColor: '#c4c4c4', // Change the color of the buffer bar
-          },
-        }}
-      />
-      <span style={{ position: 'absolute', right: '0', top: '50%', transform: 'translateY(-50%)', paddingRight: '8px' }}>{progressPercentage}%</span>
-    </Box>
+    <div className="relative w-full">
+      <div className="overflow-hidden h-2 text-xs flex rounded bg-gray-200"><span className="absolute right-0 top-1/2 transform -translate-y-8 pr-2  inline-block mb-2 ms-[calc(25%-1.25rem)] py-0.5 px-1.5 bg-orange-50 border border-orange-200 text-xs font-bold text-orange-500 rounded-lg dark:bg-orange-800/30 dark:border-orange-800 dark:text-orange-500">{progressPercentage}%</span>
+        <div style={{ width: `${progress}%` }} className="  shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-orange-500"></div>
+        <div style={{ width: `${buffer}%` }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gray-400"></div>
+      </div>
+      
+    </div>
   );
 }

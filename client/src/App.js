@@ -95,7 +95,7 @@ function App() {
           <Route path='/scheduling' element={<Scheduling/>}></Route>
           <Route path='/message' element={<InterviewMessage/>}></Route>
 
-          <Route path='/hiringmanagerdash'element={<Dashboard/>}></Route>
+          <Route path='/hiringmanagerdash' element={<Dashboard/>}></Route>
 
           <Route path='/candidatedash' element={<Candidatedash/>}>
             <Route path='editProfile' element={<EditProfile/>} />

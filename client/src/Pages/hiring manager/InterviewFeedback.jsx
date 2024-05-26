@@ -168,13 +168,14 @@ return (
              <button type='submit' className="float-right esm:mr-[15%] sm:mr-[7%] md:mr-[6%] 900px:mr-[5%] 1010px:mr-[4%] bg-[#EA7122] esm:w-[50px] esm:h-[15px] 350px:w-[60px] 350px:h-[18px] 500px:w-[80px] 500px:h-[20px] sm:w-[100px] sm:h-[25px] md:w-[110px] md:h-[30px] 1010px:w-[120px] 1010px:h-[32px] 1300px:w-[125px] 1300px:h-[34px] xl:w-[130px] xl:h-[35px] rounded-[30px] ">Submit</button>
              </form>
            
-               <ProgressTimeline ></ProgressTimeline>
+           <br />
+              
                
           
              </div>
-             
+              <ProgressTimeline  ></ProgressTimeline>
         </div>
-
+       
       </div>   
       </div>
       </div>
