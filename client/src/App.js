@@ -16,7 +16,7 @@ import {Toaster} from 'react-hot-toast'
 import Admindash from './Pages/admin/Admindash';
 //import Recruiterdash from './Pages/recruiter/Recruiterdash';
 import Interviewerdash from './Pages/interviewer/Interviewerdash';
-import Hiringmanagerdash from './Pages/hiring manager/Hiringmanagerdash';
+
 import Candidatedash from './Pages/candidate/Candidatedash';
 import Register from './Pages/Register';
 import UserContextProvider from './Context/UserContext';
