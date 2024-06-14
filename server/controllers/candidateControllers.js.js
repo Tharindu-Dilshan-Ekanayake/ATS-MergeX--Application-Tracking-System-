@@ -11,12 +11,12 @@ const fileUpload = (req, res) => {
     }
 
     console.log("req.file ", req.file);  // Log the file information
-    console.log("req.body ", req.body); 
+    console.log("req.body ", req.body);
     console.log("req.user ", req.user._id);
 
     const title = req.body.title;
     const fileName = req.file.filename;
-    res.status(200).json({ message: "File uploaded successfully"});
+    res.status(200).json({ message: "File uploaded successfully" });
 
     // try {
     //   await PdfDetail.create({
@@ -40,8 +40,15 @@ const getSingleUser = async (req, res) => {
 }
 
 const editProfile = async (req, res) => {
-  const updatedUser = await User.findByIdAndUpdate(res.user.id, {...req.body}, {new: true});
-  res.status(200).json(updatedUser);
+  try {
+    const user = req.user;
+    console.log(req.body);
+    const updatedUser = await User.findByIdAndUpdate(user.id, { ...req.body }, { new: true });
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating user', error });
+  }
+
 }
 
 

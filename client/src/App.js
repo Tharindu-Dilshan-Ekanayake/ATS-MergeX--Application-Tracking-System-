@@ -93,8 +93,8 @@ function App() {
           <Route path='/hiringmanagerdash'element={<Hiringmanagerdash/>}></Route>
 
           <Route path='/candidatedash' element={<Candidatedash/>}>
+            <Route index element={<LandingPage />} />
             <Route path='editProfile' element={<EditProfile/>} />
-            <Route path='landingPage' element={<LandingPage/>} />
             <Route path='statusPage' element={<Status/>} />
             <Route path='submissionPage' element={<PendingSubmission/>} />
             <Route path='sessionPage' element={<Session/>} />

@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { hashPassword, comparePassword } = require('../helpers/auth');
 const UserModel = require('../models/user');
 const generateTokenAndSetCookie = require('../utils/generateToken');
+const jwt = require('jsonwebtoken');
 
 //const multer = require('multer')
 
@@ -175,7 +175,11 @@ const getprofile = (req, res) => {
                         gender: user.gender,
                         dob: user.dob,
                         role: user.role,
-                        image: user.image // Include the image data
+                        image: user.image, // Include the image data
+                        bio: user.bio,
+                        education: user.education,
+                        phone_number: user.phone_number,
+                        age: user.age
                     };
 
                     res.json(userProfile);

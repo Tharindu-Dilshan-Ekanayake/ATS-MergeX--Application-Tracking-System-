@@ -27,7 +27,7 @@ const Sidebar = () => {
       <Avatar />
       <div className='flex flex-col divide-y divide-neutral-600 mb-9 w-full'>
 
-        <NavLink style={navLinkStyles} to="/candidatedash/landingPage" >
+        <NavLink style={navLinkStyles} to="/candidatedash" end>
           <div className='flex justify-start   pt-3 py-3 hover:bg-neutral-700 hover:text-gray-400 pl-8'>
             <LuLayoutDashboard className='text-2xl mr-5'/>
             Dashboard
@@ -70,7 +70,10 @@ const Sidebar = () => {
         </NavLink>
        
       </div>
-      <Logout />
+      <NavLink to='/'>
+        <Logout />
+      </NavLink>
+      
     </div>
     
   )

@@ -15,7 +15,7 @@ const {
 router.get("/", (req, res) => {res.send('Candidate API');})
 
 router.get('/:id', findSingleUser, getSingleUser);
-router.patch('/:id', findSingleUser , editProfile);
+router.put('/editProfile', protectRoute, editProfile);
 router.post('/upload/',protectRoute, fileUpload);
 
 

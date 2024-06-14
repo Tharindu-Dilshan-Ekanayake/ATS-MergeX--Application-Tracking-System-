@@ -75,6 +75,31 @@ body {
 	background: #242424;
 }
 
+/* input:checked+.radio-tile {
+  background-color: rgb(101 163 13);
+  box-shadow: 0 0 12px rgb(101 163 13);
+  transform: scale(1.1);
+} */
+
+input:hover+.radio-tile label, 
+input:hover+.radio-tile .icon-style  {
+  color: rgb(212 212 212);
+}
+
+.input-container:hover {
+  border-color: white;
+  background-color: rgb(64 64 64);
+}
+
+input:checked+.radio-tile .icon-style,
+input:checked+.radio-tile label {
+  color: white;
+}
+
+.input-container:has(input:checked) {
+  border-color: rgb(229 229 229);
+}
+
 /* styles defined in index.css will be available to all components in the application, regardless of whether they import the CSS file or not.
 
 

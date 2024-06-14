@@ -1,21 +1,30 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { BiSolidCamera } from "react-icons/bi";
 import { BsPersonAdd } from "react-icons/bs";
+import axios from 'axios';
 
 
 
 
 
-const AvatarDP = () => {
+const AvatarDP = ({user}) => {
 
   const [profileImage, setProfileImage] = useState(null);
   const [newProfileImage, setNewProfileImage] = useState(null);
 
+  useEffect(() => {
+    if(user) {
+      setProfileImage(user.image);
+    }
+  }, [user]);
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+    
     if (file) {
-      setNewProfileImage(file);
+      console.log(file);
+      setNewProfileImage(file); 
+      // Store the new image file for the PUT request
       // Optionally display the selected image preview
       const reader = new FileReader();
       reader.onload = () => {
@@ -25,17 +34,41 @@ const AvatarDP = () => {
     }
   };
 
-  const handleRemoveImage = () => {
-    setProfileImage(null);
-    setNewProfileImage(null);
+  const handleRemoveImage = async () => {
+    try {
+      // Assuming you have an endpoint to remove the profile image
+      await axios.put('/candidatedash/editProfile', { image: null });
+      setProfileImage(null);
+      setNewProfileImage(null);
+    } catch (error) {
+      console.error('Error removing profile image:', error);
+    }
   };
 
-  const handleUpdateProfile = () => {
-    // Send the newProfileImage to the server for updating the profile
-    // Reset the state after updating the profile
-    setProfileImage(null);
-    setNewProfileImage(null);
+  const handleUpdateProfile = async () => {
+    if (!newProfileImage) {
+      return;
+    }
+    console.log('newly selected image: ',newProfileImage);
+    const formData = new FormData();
+    // FormData is a built-in JavaScript object that provides a way to construct a set of key/value pairs 
+    formData.append('image', newProfileImage);
+  
+    try {
+      const response = await axios.put('/candidatedash/editProfile', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(response.data);
+      // Optionally reset the state after updating the profile
+      setProfileImage(null);
+      setNewProfileImage(null);
+    } catch (error) {
+      console.error('Error updating profile image:', error);
+    }
   };
+  
 
 
   return (
@@ -51,7 +84,12 @@ const AvatarDP = () => {
 
         <div className='flex justify-center  items-center round '>
           <label htmlFor="fileInput" className='cursor-pointer '>
-            <input id="fileInput" type="file" onChange={handleImageChange} className='hidden' />
+            <input 
+              id="fileInput" 
+              type="file" 
+              onChange={handleImageChange} 
+              accept='image/*'
+              className='hidden' />
             <div className="rounded-full bg-orange-500 p-3 hover:bg-orange-200 hover:border-2 transition duration-300">
               <BiSolidCamera className='hover:border-orange-500 transition duration-300'/>
             </div>
