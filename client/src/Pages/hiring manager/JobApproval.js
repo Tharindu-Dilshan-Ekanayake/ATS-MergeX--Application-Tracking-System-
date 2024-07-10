@@ -10,8 +10,18 @@ export default function JobApproval() {
 
   
   const [jobpostings, setJobPostings] = useState([]);
+  // const [showEvaluated,setShowEvaluated] = useState(false);
 
-
+  // const setshowEvaluatedtrue = () => {
+  
+  //   setShowEvaluated(true);
+    
+  // }
+  
+  // const setshowEvaluatedfalse = ()=>{
+  //   setShowEvaluated(false);
+  // }
+  
 
   useEffect(() => {
     axios
@@ -42,6 +52,7 @@ export default function JobApproval() {
               <p className="pb-[20px] 320px:text-[0.5rem]  450px:text-[0.8rem] sm:text-[0.9rem]   900px:text-[1.1rem]  1010px:text-[1.2rem] ">
                 Pending jobs
               </p>
+              {/* <div>{!showEvaluated ? ( <button className="absolute right-[60px] top-[95px] p-[10px] rounded-[10px] bg-[#EA7122]" onClick={setshowEvaluatedtrue}>View Checked Job Posting</button>):( <button className="absolute right-[60px] top-[95px] p-[10px] rounded-[10px] bg-[#EA7122]" onClick={setshowEvaluatedfalse}>View Unchecked Job Postings</button>)} </div> */}
               <div>
                 <div className="overflow-auto h-[75vh] ">
                   {jobpostings.map((jobposting) => (
