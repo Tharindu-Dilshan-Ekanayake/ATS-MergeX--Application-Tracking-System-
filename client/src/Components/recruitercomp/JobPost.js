@@ -152,7 +152,7 @@ export default function JobPost({ fetchPendingJobPostings }) {
             </div>
             <textarea
               id="description"
-              cols="150"
+              cols="160"
               rows="5"
               placeholder="Type here..."
               value={description}
@@ -198,7 +198,7 @@ export default function JobPost({ fetchPendingJobPostings }) {
             </div>
             <textarea
               id="requiredSkills"
-              cols="150"
+              cols="160"
               rows="5"
               placeholder="Type here..."
               value={requiredSkills}

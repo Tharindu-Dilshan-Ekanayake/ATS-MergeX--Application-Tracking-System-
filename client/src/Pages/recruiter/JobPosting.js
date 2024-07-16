@@ -8,13 +8,13 @@ import axios from "axios";
 
 export default function JobPosting() {
   const [state, setState] = useState(1);
-  const [jobPostings, setJobPostings] = useState([]);
+  const [pendingJobs, setPendingJobs] = useState([]);
 
   const fetchPendingJobPostings = async () => {
     axios
       .get("/job/getAllPendingJobPostings")
       .then((response) => {
-        setJobPostings(response.data);
+        setPendingJobs(response.data);
       })
       .catch((error) => {
         console.log("Error fetching pending job postings:", error);
@@ -83,8 +83,8 @@ export default function JobPosting() {
             }`}
           >
             <PendingJobs
-              jobPostings={jobPostings}
-              setJobPostings={setJobPostings}
+              pendingJobs={pendingJobs}
+              setPendingJobs={setPendingJobs}
               fetchPendingJobPostings={fetchPendingJobPostings}
             />
           </div>

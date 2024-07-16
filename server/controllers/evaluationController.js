@@ -403,6 +403,7 @@ const getrejectedList = async (req,res)=>{
      }
 }
 
+
 const approvedjobPosting = async (req,res)=>{
   try{
     const response = await JobPosting.find({approved:true},{jobTitle:1});
@@ -415,6 +416,19 @@ const approvedjobPosting = async (req,res)=>{
   }
 
 }
+
+const getHiredCandidatesCount = async (req, res) => {
+  const { jobId } = req.params; // Assuming you pass job_id as a parameter
+
+  try {
+    const count = await Evaluationmodel.countDocuments({ job_id: jobId, isHired: true });
+    res.json({ count });
+  } catch (error) {
+    console.error('Error in getHiredCandidatesCount:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
 
 module.exports={
   createEvalautions,
@@ -435,5 +449,7 @@ module.exports={
     getcandidateforfinaldecision,
     gethiredCandidtaesList,
     getrejectedList,
-    approvedjobPosting
+    approvedjobPosting,
+    getHiredCandidatesCount
+
 }

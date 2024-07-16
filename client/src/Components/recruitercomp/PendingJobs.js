@@ -5,19 +5,29 @@ import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { toast } from "react-hot-toast";
 
-export default function PendingJobs({ jobPostings, setJobPostings, fetchPendingJobPostings}) {
+export default function PendingJobs({ pendingJobs, setPendingJobs, fetchPendingJobPostings }) {
+  // const [pendingJobs, setPendingJobs] = useState([]);
+  const [rejectedJobs, setRejectedJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [editModeJobs, setEditModeJobs] = useState({});
 
   useEffect(() => {
     axios.get("/job/getAllPendingJobPostings")
       .then((response) => {
-        setJobPostings(response.data);
+        setPendingJobs(response.data);
       })
       .catch((error) => {
         console.log("Error fetching pending job postings:", error);
       });
-  }, [setJobPostings]);
+
+    axios.get("/job/getAllRejectedJobPostings")
+      .then((response) => {
+        setRejectedJobs(response.data);
+      })
+      .catch((error) => {
+        console.log("Error fetching rejected job postings:", error);
+      });
+  }, [setPendingJobs, setRejectedJobs]);
 
   const toggleEditMode = (jobId) => {
     setEditModeJobs((prevState) => ({
@@ -44,10 +54,8 @@ export default function PendingJobs({ jobPostings, setJobPostings, fetchPendingJ
   };
 
   const handleSaveClick = () => {
-    console.log("Clicked");
-    const { jobTitle, vacancies, description, salary, requiredExperience } =
-      selectedJob;
-
+    const { jobTitle, vacancies, description, salary, requiredExperience } = selectedJob;
+  
     if (!jobTitle) {
       toast.error("Please fill in the Job Title field.");
     } else if (!vacancies) {
@@ -61,20 +69,34 @@ export default function PendingJobs({ jobPostings, setJobPostings, fetchPendingJ
     } else if (vacancies < 0 || salary < 0 || requiredExperience < 0) {
       toast.error("Number fields cannot have negative values.");
     } else {
+      const updatedJob = {
+        ...selectedJob,
+        pending: true,
+        rejected: false,
+        improvements: ""
+      };
+  
       axios
-        .put(`/job/updateJobPosting/${selectedJob._id}`, selectedJob)
+        .put(`/job/updateJobPosting/${selectedJob._id}`, updatedJob)
         .then((response) => {
-          console.log(response.data);
-          setJobPostings((prevState) => {
-            var updatedJobPostings = prevState.map((job) => {
-              if (job._id === selectedJob._id) {
-                return response.data;
-              }
-              return job;
+          fetchPendingJobPostings();
+          if (selectedJob.pending) {
+            setPendingJobs((prevState) => {
+              const updatedJobPostings = prevState.map((job) => {
+                if (job._id === selectedJob._id) {
+                  return response.data;
+                }
+                return job;
+              });
+              return updatedJobPostings;
             });
-            console.log(updatedJobPostings);
-            return updatedJobPostings;
-          });
+          } else {
+            setRejectedJobs((prevState) => {
+              const updatedRejectedJobPostings = prevState.filter((job) => job._id !== selectedJob._id);
+              setPendingJobs((prevState) => [...prevState, response.data]);
+              return updatedRejectedJobPostings;
+            });
+          }
           setSelectedJob(null);
           setEditModeJobs({});
           toast.success("Job Post updated successfully!");
@@ -85,7 +107,7 @@ export default function PendingJobs({ jobPostings, setJobPostings, fetchPendingJ
         });
     }
   };
-
+  
   const handleCancelClick = () => {
     setSelectedJob(null);
     setEditModeJobs({});
@@ -101,82 +123,156 @@ export default function PendingJobs({ jobPostings, setJobPostings, fetchPendingJ
       })
       .catch((error) => {
         console.log('Error deleting job post:', error);
-        toast.error('Failed to delete job psot. Please try again later.');
+        toast.error('Failed to delete job post. Please try again later.');
       });
   };
 
   return (
-    <div className="flex w-full m-0 text-left">
-      <div className="w-[32.5%] m-0">
-      <style>
-                {`
-                    .scrollbar-hidden::-webkit-scrollbar {
-                        display: none;
-                    }
-                    .scrollbar-hidden {
-                        scrollbar-width: none; /* Firefox */
-                        -ms-overflow-style: none; /* IE and Edge */
-                    }
-                `}
-                </style>
-        <div className="flex flex-col w-[95%] max-h-[700px] overflow-y-auto scrollbar-hidden">
-          {jobPostings.map((job) => (
+    <div className="flex w-full h-full m-0 text-left">
+      <div className="flex flex-col w-[32.5%]">
+        <div className="flex flex-col w-[95%] h-[60%] max-h-[60%] overflow-y-scroll pr-2">
+          <h2 className="text-white text-lg mb-4">Pending Jobs</h2>
+          {pendingJobs.map((job) => (
             <div
               key={job._id}
-              className="meeting_container w-full flex p-2 border-b-[1px] border-white cursor-pointer"
+              className={`meeting_container w-full flex cursor-pointer border-b border-gray-500 hover:bg-gray-100 hover:bg-opacity-10 p-[10px] ${
+                selectedJob && selectedJob._id === job._id ? 'bg-[#BABABA] bg-opacity-20 opacity-100' : 'hover:bg-gray-300'
+              }`}
+              onClick={() => handleJobBarClick(job)}
             >
-              <div
-                className="title w-full flex justify-between"
-              >
+              <div className="title w-full flex justify-between">
                 <div className="flex">
                   <PiBriefcase
                     size={25}
                     className={`text-white ${
-                      editModeJobs[job._id] ? "1" : "opacity-25"
+                      selectedJob && selectedJob._id === job._id ? "opacity-100" : "opacity-25"
                     }`}
                   />
                   <p
                     className={`text-[14px] text-white ${
-                      editModeJobs[job._id] ? "1" : "opacity-25"
+                      selectedJob && selectedJob._id === job._id ? "opacity-100" : "opacity-25"
                     }`}
-                    onClick={() => handleJobBarClick(job)}
                   >
                     {job.jobTitle}
                   </p>
                 </div>
                 <div className="flex">
-                {selectedJob &&  selectedJob._id === job._id && (
-                  <>
-                  <div>
-                    <FaRegEdit
-                      size={25}
-                      className={`text-white cursor-pointer ${editModeJobs[job._id] ? 'opacity-100' : 'opacity-25'}`}
-                      onClick={() => toggleEditMode(job._id)}
-                    />
-                  </div>
-
-                  <div>
-                      <RiDeleteBinLine
+                  {selectedJob && selectedJob._id === job._id && (
+                    <>
+                      <div>
+                        <FaRegEdit
                           size={25}
-                          className="text-white opacity-25 cursor-pointer"
-                          onClick={handleDeleteClick}
-                      />
-                  </div>
-                </>
-                )}
+                          className={`text-white cursor-pointer ${
+                            editModeJobs[job._id] ? "opacity-100" : "opacity-25"
+                          }`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleEditMode(job._id);
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <RiDeleteBinLine
+                          size={25}
+                          className="text-white cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteClick();
+                          }}
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
-
               </div>
             </div>
           ))}
+          {pendingJobs.length === 0 && (
+            <p className="text-white opacity-25 text-center mt-4">No pending jobs found</p>
+          )}
+        </div >
+        <div className="flex flex-col w-[95%] h-[40%] max-h-[40%] overflow-y-scroll pr-2 mt-5">  
+          <h2 className="text-white text-lg mb-4 mt-8">Rejected Jobs</h2>
+          {rejectedJobs.map((job) => (
+            <div
+              key={job._id}
+              className={`meeting_container w-full flex cursor-pointer border-b border-gray-500 hover:bg-gray-100 hover:bg-opacity-10 p-[10px] ${
+                selectedJob && selectedJob._id === job._id ? 'bg-[#BABABA] bg-opacity-20 opacity-100' : 'hover:bg-gray-300'
+              }`}
+              onClick={() => handleJobBarClick(job)}
+            >
+              <div className="title w-full flex justify-between">
+                <div className="flex">
+                  <PiBriefcase
+                    size={25}
+                    className={`text-white ${
+                      selectedJob && selectedJob._id === job._id ? "opacity-100" : "opacity-25"
+                    }`}
+                  />
+                  <p
+                    className={`text-[14px] text-white ${
+                      selectedJob && selectedJob._id === job._id ? "opacity-100" : "opacity-25"
+                    }`}
+                  >
+                    {job.jobTitle}
+                  </p>
+                </div>
+                <div className="flex">
+                  {selectedJob && selectedJob._id === job._id && (
+                    <>
+                      <div>
+                        <FaRegEdit
+                          size={25}
+                          className={`text-white cursor-pointer ${
+                            editModeJobs[job._id] ? "opacity-100" : "opacity-25"
+                          }`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleEditMode(job._id);
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <RiDeleteBinLine
+                          size={25}
+                          className="text-white cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteClick();
+                          }}
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+          {rejectedJobs.length === 0 && (
+            <p className="text-white opacity-25 text-center mt-4">No rejected jobs found</p>
+          )}
         </div>
       </div>
 
-      <div
-       className="w-[67.5%] border-l border-l-[1px] border-l-[rgba(234,113,34,0.25)]"
-      >
+      <div className="w-[67.5%] h-full max-h-full overflow-y-scroll pr-2 ">
         {selectedJob && (
           <div>
+            {selectedJob.rejected && (
+              <div className="w-full p-4">
+                <div className="mb-3">
+                  <label>Improvements</label>
+                </div>
+                <div>
+                  <textarea
+                    value={selectedJob.improvements}
+                    readOnly
+                    className={`rounded-[10px] px-4 py-2 bg-white bg-opacity-5 w-[90%] ${
+                      editModeJobs[selectedJob._id] ? "opacity-25" : "opacity-100"
+                    }`}
+                  />
+                </div>
+              </div>
+            )}
             <div className="flex w-full p-4">
               <div className="w-[50%]">
                 <div className="mb-3">

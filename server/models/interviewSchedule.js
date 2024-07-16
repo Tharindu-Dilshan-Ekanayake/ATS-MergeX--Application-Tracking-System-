@@ -29,6 +29,10 @@ const interviewScheduleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    assign: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     link: {
         type: String,
         required: true

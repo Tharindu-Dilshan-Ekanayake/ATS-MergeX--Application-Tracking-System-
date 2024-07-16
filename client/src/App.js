@@ -57,6 +57,8 @@ import HiringDecisions from './Pages/hiring manager/HiringDecisions';
 import Reporting from './Pages/hiring manager/Reporting';
 import MessageHiringManager from './Pages/hiring manager/MessageHiringManager';
 import OTP from './Pages/OTP';
+import Landingpage from './Components/LandingPage/Landingpage';
+import QandA from './Pages/admin/QandA';
 
 axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.withCredentials = true
@@ -67,14 +69,15 @@ function App() {
 
   
   return (
-    <div className="App overflow-x-hidden">
+    <div className="overflow-x-hidden App">
 
       <UserContextProvider>
       <Toaster position='bottom-right' toastOptions={{duration: 3000}}></Toaster>
       
         <Routes>
           
-          <Route  path='/'element={<Login/>}> </Route>
+          <Route path='/' element={<Landingpage/>}></Route>
+          <Route  path='/login'element={<Login/>}> </Route>
           <Route  path='/forget'element={<ForgetPassword/>}> </Route>
           <Route path='verifyotp' element={<OTP/>}/>
           <Route  path='/changepassword'element={<ChangePw/>}> </Route>
@@ -120,6 +123,7 @@ function App() {
           <Route path='/adminroleassignment' element={<ProtectedRoute><RoleAssignment /></ProtectedRoute>} />
           <Route path='/adminaccesscontrol' element={<ProtectedRoute><AccessControl /></ProtectedRoute>} />
           <Route path='/adminsystemsettings' element={<ProtectedRoute><SystemSettings /></ProtectedRoute>} />
+          <Route path='/adminqandas' element={<ProtectedRoute><QandA/></ProtectedRoute>}></Route>
 
           <Route path='/userdetails' element={<ProtectedRoute><ViewUserCard /></ProtectedRoute>} />
         </Routes>

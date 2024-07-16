@@ -102,7 +102,7 @@
   
   
   .react-calendar__tile--active {
-    background-color: #EA712287 !important; 
+    background-color: #e67e22 !important; 
     color: white !important;
   }
   
@@ -124,5 +124,20 @@
   
   .react-calendar__tile--range {
     background-color: #85c1e9;
+    color: white !important;
+  }
+
+  .react-calendar__tile--has-interviews {
+    background-color: #EA712287 !important; /* Highlight color for dates with interviews */
+    color: white !important;
+  }
+  
+  .react-calendar__tile--has-interviews:hover {
+    background-color: #e67e22 !important; /* Slightly different color on hover */
+    color: white !important;
+  }
+
+  .react-calendar__tile--has-interviews.react-calendar__tile--active {
+    background-color: #e67e22 !important; /* Same as active color */
     color: white !important;
   }

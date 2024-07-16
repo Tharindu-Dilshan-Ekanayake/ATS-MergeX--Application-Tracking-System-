@@ -40,7 +40,7 @@ export default function CandidateCommunication() {
           <div
             className={` ${
               state === 1
-                ? "bg-[#2B2B2B] text-white rounded-b-[30px] h-[730px]"
+                ? "bg-[#2B2B2B] text-white rounded-b-[30px] h-full"
                 : "hidden"
             }`}
           >
@@ -49,7 +49,7 @@ export default function CandidateCommunication() {
           <div
             className={`  ${
               state === 2
-                ? "bg-[#2B2B2B] text-white rounded-b-[30px] h-[730px]"
+                ? "bg-[#2B2B2B] text-white rounded-b-[30px] h-full"
                 : "hidden"
             }`}
           >

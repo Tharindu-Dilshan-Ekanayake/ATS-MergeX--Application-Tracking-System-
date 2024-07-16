@@ -43,12 +43,15 @@ const getApplicationsGroupedByJobId = async (req, res) => {
         // Use the MongoDB aggregation framework to group applications by job_id
         const groupedApplications = await Application.aggregate([
             {
+                $sort: { createdAt: -1 } // Sort by createdAt in descending order
+            },
+            {
                 $group: {
                     _id: '$job_id', // Group by job_id
                     job_id: { $first: '$job_id' },
                     applications: {
                         $push: {
-                            _id :'$_id',
+                            _id: '$_id',
                             invitation_id: '$invitation_id',
                             user_id: '$user_id',
                             user_name: '$user_name',
@@ -59,11 +62,12 @@ const getApplicationsGroupedByJobId = async (req, res) => {
                             createdAt: '$createdAt'
                         }
                     },
-                    count: { $sum: 1 }
+                    count: { $sum: 1 },
+                    latestUpdate: { $first: '$createdAt' } // Track the latest update time
                 }
             },
             {
-                $sort: { _id: 1 }
+                $sort: { latestUpdate: -1 } // Sort by the latest update time in descending order
             }
         ]);
 
@@ -73,6 +77,7 @@ const getApplicationsGroupedByJobId = async (req, res) => {
         res.status(500).json({ message: 'Failed to get applications grouped by job_id' });
     }
 };
+
 //put
 const approveApplication = async (req, res) => {
     try {

@@ -161,7 +161,7 @@ export default function Hiringmanagerdash() {
 
             <div className="card_container_2 flex flex-row  mb-6 justify-center gap-20  sm:ml-[50px] sm:mr-[50px] lg:ml-[100px] lg:mr-[100px] ">
                     
-                    <CardS name="Posted Jobs" val={carddetails.postedJobs}/>
+                    <CardS name="Approved Jobs" val={carddetails.postedJobs}/>
                     <CardS name="Total Applications" val={carddetails.applications}/>
                     <CardS name="Accepted Applications" val={carddetails.acceptedApplications}/>
                     <CardS name="Total Candidates" val={carddetails.candidates}/>

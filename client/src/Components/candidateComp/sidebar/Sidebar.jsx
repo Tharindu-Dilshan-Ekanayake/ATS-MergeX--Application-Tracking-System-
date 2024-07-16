@@ -7,7 +7,7 @@ import { RiInboxArchiveLine } from "react-icons/ri";
 import { RiFolderUploadLine } from "react-icons/ri";
 import { BsPersonVideo3 } from "react-icons/bs";
 import Logout from './Logout';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 
 
@@ -23,7 +23,7 @@ const Sidebar = () => {
 
   return (
 
-    <div className='flex flex-col items-center justify-between w-2/12 h-screen bg-neutral-800 z-10'>
+    <div className='z-10 flex flex-col items-center justify-between w-2/12 h-screen bg-neutral-800'>
 
       <div className='w-full h-1/5 '> <Avatar/> </div>
       
@@ -71,10 +71,11 @@ const Sidebar = () => {
           </div>
         </NavLink>
       </div>
-
+      <Link to='/login'>
       <div className='flex items-end justify-center w-full h-1/12'>
         <Logout />
       </div>
+      </Link>
 
     </div>
 

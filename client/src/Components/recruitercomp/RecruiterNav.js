@@ -61,7 +61,7 @@ export default function RecruiterNav() {
                             <li>
                                 <div className={`flex items-center py-3 pl-8 hover:bg-gray-100 hover:bg-opacity-10 dark:hover:text-neutral-300 text-white ${activeItem === 1 ? 'bg-[#BABABA] bg-opacity-20 opacity-100' : 'opacity-25 hover:bg-gray-300 hover:text-white hover:opacity-70'}`}>
                                     <div className='flex'>
-                                        <MdDashboard size={20} className=" sm:w-6 sm:h-6  mr-8" />
+                                        <MdDashboard size={20} className="mr-8 sm:w-6 sm:h-6" />
                                         <label className='text-[18px]'>Dashboard</label>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@ export default function RecruiterNav() {
                             <li>
                             <div className={`flex items-center py-3 pl-8 hover:bg-gray-100 hover:bg-opacity-10 dark:hover:text-neutral-300 text-white ${activeItem === 2 ? 'bg-[#BABABA] bg-opacity-20 opacity-100' : 'opacity-25 hover:bg-gray-300 hover:text-white hover:opacity-70'}`}>
                                 <div className='flex'>
-                                        <FiArchive size={20} className="sm:w-6 sm:h-6 mr-8" />
+                                        <FiArchive size={20} className="mr-8 sm:w-6 sm:h-6" />
                                         <label className='text-[18px]'>Job Posting</label>
                                     </div> 
                                 </div>
@@ -120,6 +120,8 @@ export default function RecruiterNav() {
                     </ul>
                     <div className='flex items-center justify-center'>
                         <div className='pt-10 fix w-fit'>
+                            
+                            <Link to='/login'>
                             <button className='bg-[#EA7122] w-44 h-12 rounded-xl flex items-center justify-center'
                              onClick={logout}
                              >
@@ -128,6 +130,7 @@ export default function RecruiterNav() {
                                     <span className='text-white'>LOGOUT</span>
                                 </div>
                             </button>
+                            </Link>
                         </div>
                     </div>
                 </nav>

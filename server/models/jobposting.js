@@ -37,14 +37,30 @@ const jobPostingSchema = new mongoose.Schema({
     type: [String],
     required: true
   },
+  pending:{
+    type: Boolean,
+    default: true
+  },
   approved:{
+    type: Boolean,
+    default: false
+  },
+  rejected: {
     type: Boolean,
     default: false
   },
   expired: {
     type: Boolean,
     default: false
-  }
+  },
+  approvedAt: {
+    type: Date,
+    default: null
+  },
+  improvements: {
+    type: String,
+    default: ''
+  },
 }, {timestamps: true});
 
 const JobPostingmodel = mongoose.model('JobPosting', jobPostingSchema);

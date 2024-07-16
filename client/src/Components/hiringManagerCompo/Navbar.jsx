@@ -1,5 +1,5 @@
 import React,{ useState, useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import {  NavLink } from 'react-router-dom';
 import { MdDashboard } from "react-icons/md";
 import { IoBagHandle } from "react-icons/io5";
 import { VscFeedback } from "react-icons/vsc";
@@ -110,7 +110,7 @@ export default function Navbar(props) {
                     {!!user && <h1 className='opacity-40'> {user.role} </h1>}
                 </div>
             </div>
-      <div className='menuList mt-5 mb-5 '>
+      <div className='mt-5 mb-5 menuList '>
          {
           menuItem.map((item,index)=>(
             <NavLink to={item.path} key={index} className='link flex flex-row gap-6 align-items-center pl-10 pr-10 p-[10px]  text-[#ffffff] opacity-[60%] hover:bg-[#bababa17] hover:opacity-[100%] hover:text-[#ffffff] hover:[transition:all_0.5s]'  activeclassName='active '>
@@ -120,6 +120,8 @@ export default function Navbar(props) {
           ))
          }
       </div>
+      
+      
       <div className='logOutCover items-center text-center flex 2xl:pt-[20px] '>
       <div className='m-auto flex flex-row p-[10px] bg-[#eb7323] rounded-[15px] w-[140px] 2xl:w-[180px] items-center justify-center gap-1.5 '>
       <ResponsiveIcon IconComponent={LuLogOut} className="logoutIc " />

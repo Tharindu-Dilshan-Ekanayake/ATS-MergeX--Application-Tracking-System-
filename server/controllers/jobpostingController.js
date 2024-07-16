@@ -41,7 +41,6 @@ const createJobPosting = async (req, res) => {
             salary,
             requiredExperience,
             requiredSkills,
-            approved
         });
 
         // Return the created job posting
@@ -55,7 +54,7 @@ const createJobPosting = async (req, res) => {
 // GET all pending job postings
 const getAllPendingJobPostings = async (req, res) => {
     try {
-        const jobPostings = await JobPosting.find({ approved: false }).sort({ createdAt: -1 });
+        const jobPostings = await JobPosting.find({ pending: true }).sort({ updatedAt: -1 });
 
         if (!jobPostings || jobPostings.length === 0) {
             return res.status(404).json({ message: "No pending job postings found" });
@@ -71,10 +70,26 @@ const getAllPendingJobPostings = async (req, res) => {
 // GET all approved job postings
 const getAllApprovedJobPostings = async (req, res) => {
     try {
-        const jobPostings = await JobPosting.find({ approved: true }).sort({ updatedAt: -1 });
+        const jobPostings = await JobPosting.find({ approved: true}).sort({ approvedAt: -1 });
 
         if (!jobPostings || jobPostings.length === 0) {
             return res.status(404).json({ message: "No approved job postings found" });
+        }
+
+        return res.status(200).json(jobPostings);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+// GET all rejected job postings
+const getAllRejectedJobPostings = async (req, res) => {
+    try {
+        const jobPostings = await JobPosting.find({ rejected: true }).sort({ createdAt: -1 });
+
+        if (!jobPostings || jobPostings.length === 0) {
+            return res.status(404).json({ message: "No rejected job postings found" });
         }
 
         return res.status(200).json(jobPostings);
@@ -151,7 +166,6 @@ const getNotExpiredJobposting = async (req, res) => {
             return res.status(404).json({ message: "No active job postings found" });
         }
 
-        // Return the array of job postings
         return res.status(200).json(jobPostings);
     } catch (error) {
         console.error('Error fetching non-expired job postings:', error);
@@ -159,25 +173,61 @@ const getNotExpiredJobposting = async (req, res) => {
     }
 };
 
-//put accept-true
-
-const updateAcceptTrue = async(req,res) => {
+// PUT approve-true
+const approveJobPosting = async (req, res) => {
     const jobId = req.params.id;
-  const { approved } = req.body;
+    const { approved } = req.body;
 
-  try {
-    const updatedJob = await JobPosting.findByIdAndUpdate(jobId, { approved }, { new: true });
+    try {
+        const updateData = { 
+            approved, 
+            pending: false, 
+        };
 
-    if (!updatedJob) {
-      return res.status(404).json({ success: false, message: 'Job not found' });
+        if (approved) {
+            updateData.approvedAt = new Date();
+        }
+
+        const updatedJob = await JobPosting.findByIdAndUpdate(jobId, updateData, { new: true });
+
+        if (!updatedJob) {
+            return res.status(404).json({ success: false, message: 'Job not found' });
+        }
+
+        res.status(200).json({ success: true, message: 'Job approved successfully', job: updatedJob });
+    } catch (error) {
+        console.error('Error updating job approved:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
+};
 
-    res.status(200).json({ success: true, message: 'Job approved updated successfully', job: updatedJob });
-  } catch (error) {
-    console.error('Error updating job approved:', error);
-    res.status(500).json({ success: false, message: 'Internal server error' });
-  }
+
+// Update reject-true
+const rejectJobPosting = async (req, res) => {
+    const jobId = req.params.id;
+    const { rejected, improvements } = req.body;
+
+    try {
+        const updateData = { 
+            rejected, 
+            improvements,
+            pending: false, 
+        };
+
+        const job = await JobPosting.findByIdAndUpdate(jobId, updateData, { new: true });
+
+        if (!job) {
+            console.log('Job not found'); // Debug log
+            return res.status(404).json({ message: 'Job not found' });
+        }
+
+        res.status(200).json(job);
+    } catch (error) {
+        console.error('Error rejecting job:', error); // Detailed error log
+        res.status(500).json({ message: 'Failed to reject job.' });
+    }
 }
+
 
 
 module.exports = {
@@ -185,9 +235,11 @@ module.exports = {
     createJobPosting,
     getAllPendingJobPostings,
     getAllApprovedJobPostings,
+    getAllRejectedJobPostings,
     updateJobPosting,
     deleteJobPosting,
     updateExpiredStatus,
     getNotExpiredJobposting,
-    updateAcceptTrue
+    approveJobPosting,
+    rejectJobPosting
 };

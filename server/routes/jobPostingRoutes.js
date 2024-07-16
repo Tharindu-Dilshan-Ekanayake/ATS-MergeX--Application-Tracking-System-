@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cors = require('cors');
-const { createJobPosting, getAllPendingJobPostings, getAllApprovedJobPostings,updateJobPosting,deleteJobPosting, updateExpiredStatus ,getNotExpiredJobposting, updateAcceptTrue } = require('../controllers/jobpostingController');
+const { createJobPosting, getAllPendingJobPostings, getAllApprovedJobPostings,getAllRejectedJobPostings,updateJobPosting,deleteJobPosting, updateExpiredStatus ,getNotExpiredJobposting, approveJobPosting,rejectJobPosting } = require('../controllers/jobpostingController');
 
 router.use(
     cors({
@@ -13,13 +13,13 @@ router.use(
 router.post('/createJobPosting',createJobPosting);
 router.get('/getAllPendingJobPostings',getAllPendingJobPostings);
 router.get('/getAllApprovedJobPostings',getAllApprovedJobPostings);
+router.get('/getAllRejectedJobPostings',getAllRejectedJobPostings);
 router.put('/updateJobPosting/:id', updateJobPosting);
 router.put('/updateExpiredStatus/:id', updateExpiredStatus);
 router.get('/getnotexpiredjobs',getNotExpiredJobposting)
-
 router.delete('/deleteJobPosting/:id', deleteJobPosting);
-router.put('/approvetrue/:id',updateAcceptTrue);
-
+router.put('/approveJobPosting/:id',approveJobPosting);
+router.put('/rejectJobPosting/:id', rejectJobPosting)
 
 
 

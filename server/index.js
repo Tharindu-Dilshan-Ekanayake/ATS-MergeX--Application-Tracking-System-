@@ -28,7 +28,6 @@ app.use(bodyParser.json());
 // Routes setup
 app.use('/', require('./routes/authRoutes')); // Mounting auth routes
 app.use('/feedback', require('./routes/feedbackRoutes'));
-app.use('/interview', require('./routes/interviewRoutes'));
 app.use('/job',  require('./routes/jobPostingRoutes'));
 app.use('/status', require('./routes/statusRoutes'));
 app.use('/announcement', require('./routes/announcementRoutes'));
@@ -47,6 +46,7 @@ app.use('/hmfeedback',require('./routes/HmRoutes.js'));
 // Defining the port for the server to listen on
 app.use('/reporting', require('./routes/ReportingRoutes'));
 app.use('/dashboard', require('./routes/HMDashboardRoutes'));
+app.use('/qanda', require('./routes/qandaRoutes.js'));
 
 
 app.put('/evaluation/updateevaluation/:_id', async (req, res) => {

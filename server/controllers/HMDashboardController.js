@@ -26,7 +26,7 @@ const getTotalJobPostings = async (req, res)=>{
 
 const getTotalPendingJobs = async (req, res)=>{
     try{
-        const count = await JobPosting.countDocuments({approved:false});
+        const count = await JobPosting.countDocuments({pending:true});
         res.status(200).json({pendingjobpostingcount: count});
     }catch(err){
         res.status(500).json({error: 'Error counting documents', details: err});

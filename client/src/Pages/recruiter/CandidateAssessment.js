@@ -391,20 +391,8 @@ if(showEvaluated){
       </div>
     </div>
 
-    <style>
-      {`
-        .scrollbar-hidden::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hidden {
-          scrollbar-width: none; /* Firefox */
-          -ms-overflow-style: none; /* IE and Edge */
-        }
-      `}
-    </style>
-
     {showDetails ? (
-      <div className="description flex flex-col w-full pt-[20px] box-border max-h-[800px] overflow-y-auto scrollbar-hidden">
+      <div className="description flex flex-col w-full pt-[20px] box-border max-h-[800px] overflow-y-auto  ">
         <div className="flex flex-row py-[20px] justify-center gap-5 border-[grey]  border-b-[2px] ">
           <img
             src={selected.image}

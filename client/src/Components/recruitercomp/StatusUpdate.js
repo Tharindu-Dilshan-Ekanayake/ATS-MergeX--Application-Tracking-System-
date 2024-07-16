@@ -181,8 +181,9 @@ export default function StatusUpdate() {
                 <hr className="w-[200px] justify-center opacity-25"></hr>
               </div>
             </div>
-            <div className="flex justify-center pt-10  overflow-y-scroll max-h-[500px] scrollbar-w-2 scrollbar-track-gray-200 scrollbar-thumb-gray-500 scrollbar-thumb-hover-gray-700">
-              <table className="">
+            <div className="h-[500px] overflow-y-scroll max-h-[500px] scrollbar-w-2 scrollbar-track-gray-200 scrollbar-thumb-gray-500 scrollbar-thumb-hover-gray-700">
+            <div className="flex justify-center pt-10">
+              <table>
                 <tbody>
                   {statusData
                     .filter((status) => status.user_email === user.email) // Filter status posts by user_id
@@ -242,12 +243,16 @@ export default function StatusUpdate() {
                         </tr>
                       );
                     })}
+                    {statusData.length === 0 && (
+                        <p className="text-white opacity-25 text-center mt-4">No status found</p>
+                    )}
                 </tbody>
               </table>
             </div>
+            </div>
           </div>
         </div>
-        <div className="w-1/2 border-l border-orange-500 h-[680px]">
+        <div className="w-1/2 h-[680px]">
           <div>
             <button
               onClick={handleAnnouncementUpdate}
@@ -263,7 +268,8 @@ export default function StatusUpdate() {
                 <hr className="w-[200px] justify-center opacity-25"></hr>
               </div>
             </div>
-            <div className="flex justify-center pt-10  overflow-y-scroll max-h-[500px] scrollbar-w-2 scrollbar-track-gray-200 scrollbar-thumb-gray-500 scrollbar-thumb-hover-gray-700">
+            <div className="h-[500px] overflow-y-scroll max-h-[500px] scrollbar-w-2 scrollbar-track-gray-200 scrollbar-thumb-gray-500 scrollbar-thumb-hover-gray-700">
+            <div className="flex justify-center pt-10">
               <table className="">
                 <tbody>
                   {announcementData
@@ -337,8 +343,12 @@ export default function StatusUpdate() {
                         </tr>
                       );
                     })}
+                    {announcementData.length === 0 && (
+                        <p className="text-white opacity-25 text-center mt-4">No announcements found</p>
+                    )}
                 </tbody>
               </table>
+            </div>
             </div>
           </div>
         </div>

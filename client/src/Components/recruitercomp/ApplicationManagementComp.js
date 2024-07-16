@@ -124,14 +124,14 @@ export default function ApplicationManagementComp() {
           <div className='h-[60px] bg-[#1b1b1b] rounded-tl-[30px] flex items-center justify-center'>
             <h1>Job List</h1>
           </div>
-          <div className='bg-[#1b1b1b] rounded-bl-[30px] h-[730px] overflow-y-auto'>
+          <div className='bg-[#1b1b1b] rounded-bl-[30px] h-[730px] overflow-y-auto pr-3'>
             {jobGroups.map((jobGroup) => {
               const jobDetail = jobDetails.find(job => job._id === jobGroup.job_id);
               const isSelected = selectedJob === jobGroup.job_id;
               return (
                 <div
                   key={jobGroup.job_id}
-                  className={`p-2 cursor-pointer ${isSelected ? 'bg-[#272727]' : 'hover:bg-[#27272767]'}`}
+                  className={`p-2 cursor-pointer border-b border-gray-500 ${isSelected ? 'bg-[#272727]' : 'hover:bg-[#27272767]'}`}
                   onClick={() => handleJobClick(jobGroup.job_id)}
                 >
                   <p className={`${isSelected ? 'opacity-100 text-[18px]' : 'opacity-50 text-[18px] '}`}>
@@ -246,23 +246,45 @@ export default function ApplicationManagementComp() {
               </div>
 
               <div className='flex justify-center pt-5'>
-                  <div className='px-4 mr-2'>
-                    <button
-                      className='h-12 bg-orange-500 w-[150px] rounded-lg hover:bg-slate-400'
-                      onClick={() => approveApplication(selectedApplication._id)}
-                    >
-                      Accept
-                    </button>
+                {/* Conditionally render buttons based on application status */}
+                {selectedApplication && (
+                  <div className='px-4'>
+                    {!selectedApplication.approval && !selectedApplication.rejected && (
+                      <>
+                        <button
+                          className='h-12 bg-orange-500 w-[150px] rounded-lg hover:bg-slate-400'
+                          onClick={() => approveApplication(selectedApplication._id)}
+                        >
+                          Accept
+                        </button>
+                        <button
+                          className='ml-4 h-12 bg-orange-500 w-[150px] rounded-lg hover:bg-slate-400'
+                          onClick={() => rejectApplication(selectedApplication._id)}
+                        >
+                          Reject
+                        </button>
+                      </>
+                    )}
+                    {selectedApplication.approval && !selectedApplication.rejected && (
+                      <button
+                        className='h-12 bg-orange-500 w-[150px] rounded-lg hover:bg-slate-400'
+                        onClick={() => rejectApplication(selectedApplication._id)}
+                      >
+                        Reject
+                      </button>
+                    )}
+                    {!selectedApplication.approval && selectedApplication.rejected && (
+                      <button
+                        className='h-12 bg-orange-500 w-[150px] rounded-lg hover:bg-slate-400'
+                        onClick={() => approveApplication(selectedApplication._id)}
+                      >
+                        Accept
+                      </button>
+                    )}
                   </div>
-                  <div className='px-4 ml-2'>
-                    <button 
-                    className='h-12 bg-orange-500 w-[150px] rounded-lg  hover:bg-slate-400'
-                    onClick={() => rejectApplication(selectedApplication._id)}
-                    >
-                      Reject
-                    </button>
-                  </div>
-                </div>
+  )}
+</div>
+
               
               
             </div>

@@ -128,6 +128,8 @@ export default function HiringmanagerNav() {
                     <div className='flex items-center justify-center'>
                         <div className='pt-10 fix w-fit'>
                             
+                            
+                            <Link to='/login'>
                                 <button className='bg-[#EA7122] w-44 h-12 rounded-xl flex items-center justify-center'
                                 onClick={logout} >
                                     <div className='flex items-center'>
@@ -135,7 +137,7 @@ export default function HiringmanagerNav() {
                                         <span className='text-white'>LOGOUT</span>
                                     </div>
                                 </button>
-                            
+                            </Link>
                             
                         </div>
                     </div>
