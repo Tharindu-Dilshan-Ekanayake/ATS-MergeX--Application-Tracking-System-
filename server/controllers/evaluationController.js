@@ -403,6 +403,19 @@ const getrejectedList = async (req,res)=>{
      }
 }
 
+const approvedjobPosting = async (req,res)=>{
+  try{
+    const response = await JobPosting.find({approved:true},{jobTitle:1});
+    if(response.length=== 0){
+      console.log("No approved job");
+    }
+  }
+  catch(error){
+    res.status(200).json({error:"server error"})
+  }
+
+}
+
 module.exports={
   createEvalautions,
     // updateEvaluation,
@@ -421,5 +434,6 @@ module.exports={
     updatecheckedhiringmanager,
     getcandidateforfinaldecision,
     gethiredCandidtaesList,
-    getrejectedList
+    getrejectedList,
+    approvedjobPosting
 }

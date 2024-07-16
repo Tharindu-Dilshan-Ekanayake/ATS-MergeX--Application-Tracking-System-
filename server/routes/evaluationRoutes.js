@@ -5,7 +5,7 @@ const cors = require('cors');
 const {
     createEvalautions, 
     //  updateEvaluation,
-      getEvaluation,getimg,getpost,getEvaCandidates,getNotEvaluatedApplications,updateIsEvaluated,getEvaluatedApplications,getRecruitercheckedEvaluations,getRecruiterUnCheckedEvaluations,getHMcheckedEvaluations,getHMUnCheckedEvaluations,updatecheckedrecruiter,updatecheckedhiringmanager,getcandidateforfinaldecision,gethiredCandidtaesList,getrejectedList} = require('../controllers/evaluationController');
+      getEvaluation,getimg,getpost,getEvaCandidates,getNotEvaluatedApplications,updateIsEvaluated,getEvaluatedApplications,getRecruitercheckedEvaluations,getRecruiterUnCheckedEvaluations,getHMcheckedEvaluations,getHMUnCheckedEvaluations,updatecheckedrecruiter,updatecheckedhiringmanager,getcandidateforfinaldecision,gethiredCandidtaesList,getrejectedList,approvedjobPosting} = require('../controllers/evaluationController');
 
 router.use(
     cors({
@@ -32,6 +32,7 @@ router.put('/updatecheckedhiringmanager/:_id',updatecheckedhiringmanager);
 router.get('/getcandidateforfinaldecision',getcandidateforfinaldecision);
 router.get('/gethiredCandidtaesList',gethiredCandidtaesList);
 router.get('/getrejectedList',getrejectedList);
+router.get('/approvedjobPosting',approvedjobPosting);
 
 
 module.exports = router;
