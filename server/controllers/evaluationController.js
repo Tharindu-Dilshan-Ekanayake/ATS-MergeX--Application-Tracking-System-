@@ -439,7 +439,7 @@ const getHMUncheckedEvaluationsById = async (req,res)=>{
     return res.status(400).json({error:"job_id query parameter is required"});
   }
   try{
-     const response = await Evaluationmodel.find({job_id,checkedhiringmanager:false});
+     const response = await Evaluationmodel.find({job_id,checkedhiringmanager:false,checkedrecruiter:true});
      if(response.length === 0){
        console.log("No applications found that match the query conditions.");
      }
@@ -449,6 +449,44 @@ const getHMUncheckedEvaluationsById = async (req,res)=>{
     res.status(200).json({error:"server error"})
     console.error('Error in getHMcheckedEvaluationsById:', error); // Log the error for debugging
   }
+}
+
+const getRecruitercheckedEvaluationsbyID = async (req,res)=>{
+  const job_id = req.params.job_id;
+  if(!job_id){
+    return res.status(400).json({error:"job_id query parameter is required"});
+  }
+  try{
+     const response = await Evaluationmodel.find({job_id,checkedrecruiter:true});
+     if(response.length === 0){
+       console.log("No applications found that match the query conditions.");
+     }
+      res.json(response);
+  }
+  catch(error){
+    res.status(200).json({error:"server error"})
+    console.error('Error in getRecruitercheckedEvaluationsbyID:', error); // Log the error for debugging
+  }
+
+}
+
+const getRecruiterUnCheckedEvaluationsbyID = async (req,res)=>{
+  const job_id = req.params.job_id;
+  if(!job_id){
+    return res.status(400).json({error:"job_id query parameter is required"});
+  }
+  try{
+     const response = await Evaluationmodel.find({job_id,checkedrecruiter:false});
+     if(response.length === 0){
+       console.log("No applications found that match the query conditions.");
+     }
+      res.json(response);
+  }
+  catch(error){
+    res.status(200).json({error:"server error"})
+    console.error('Error in getRecruiterUnCheckedEvaluationsbyID:', error); // Log the error for debugging
+  }
+
 }
 
 module.exports={
@@ -472,5 +510,7 @@ module.exports={
     getrejectedList,
     approvedjobPosting,
     getHMcheckedEvaluationsById,
-    getHMUncheckedEvaluationsById
+    getHMUncheckedEvaluationsById,
+    getRecruitercheckedEvaluationsbyID,
+    getRecruiterUnCheckedEvaluationsbyID
 }

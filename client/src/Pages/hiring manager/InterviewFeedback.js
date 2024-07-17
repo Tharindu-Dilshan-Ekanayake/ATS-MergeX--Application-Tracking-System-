@@ -399,6 +399,7 @@ export default function InterviewFeedback() {
     getInterviewdCandidates();
     getapprovedjobpostings();
   }, []);
+
   useEffect(() => {
     console.log("Evoluations data:", evoluations);
   }, [evoluations]);
@@ -424,7 +425,6 @@ export default function InterviewFeedback() {
   useEffect(() => {
     if (showEvaluated) {
       getChekedEvaluations();
-
       clearcandiates();
     } else {
       getInterviewdCandidates();
