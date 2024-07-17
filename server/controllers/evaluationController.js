@@ -309,7 +309,7 @@ const getHMcheckedEvaluations = async (req,res)=>{
 
 const getHMUnCheckedEvaluations = async (req,res)=>{
   try{ 
-    const response = await Evaluationmodel.find({checkedhiringmanager:false});
+    const response = await Evaluationmodel.find({checkedhiringmanager:false,checkedrecruiter:true});
     if(response.length === 0){
       console.log('No applications found that match the query conditions.');
     }
@@ -403,32 +403,53 @@ const getrejectedList = async (req,res)=>{
      }
 }
 
-
 const approvedjobPosting = async (req,res)=>{
   try{
     const response = await JobPosting.find({approved:true},{jobTitle:1});
     if(response.length=== 0){
       console.log("No approved job");
     }
+    res.json(response);
   }
   catch(error){
     res.status(200).json({error:"server error"})
   }
 
 }
-
-const getHiredCandidatesCount = async (req, res) => {
-  const { jobId } = req.params; // Assuming you pass job_id as a parameter
-
-  try {
-    const count = await Evaluationmodel.countDocuments({ job_id: jobId, isHired: true });
-    res.json({ count });
-  } catch (error) {
-    console.error('Error in getHiredCandidatesCount:', error);
-    res.status(500).json({ error: 'Server error' });
+const getHMcheckedEvaluationsById = async (req,res)=>{
+  const job_id = req.params.job_id;
+  if(!job_id){
+    return res.status(400).json({error:"job_id query parameter is required"});
   }
-};
-
+  try{
+     const response = await Evaluationmodel.find({job_id,checkedhiringmanager:true});
+     if(response.length === 0){
+       console.log("No applications found that match the query conditions.");
+     }
+      res.json(response);
+  }
+  catch(error){
+    res.status(200).json({error:"server error"})
+    console.error('Error in getHMcheckedEvaluationsById:', error); // Log the error for debugging
+  }
+}
+const getHMUncheckedEvaluationsById = async (req,res)=>{
+  const job_id = req.params.job_id;
+  if(!job_id){
+    return res.status(400).json({error:"job_id query parameter is required"});
+  }
+  try{
+     const response = await Evaluationmodel.find({job_id,checkedhiringmanager:false});
+     if(response.length === 0){
+       console.log("No applications found that match the query conditions.");
+     }
+      res.json(response);
+  }
+  catch(error){
+    res.status(200).json({error:"server error"})
+    console.error('Error in getHMcheckedEvaluationsById:', error); // Log the error for debugging
+  }
+}
 
 module.exports={
   createEvalautions,
@@ -450,6 +471,6 @@ module.exports={
     gethiredCandidtaesList,
     getrejectedList,
     approvedjobPosting,
-    getHiredCandidatesCount
-
+    getHMcheckedEvaluationsById,
+    getHMUncheckedEvaluationsById
 }

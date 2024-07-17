@@ -5,7 +5,7 @@ const cors = require('cors');
 const {
     createEvalautions, 
     //  updateEvaluation,
-      getEvaluation,getimg,getpost,getEvaCandidates,getNotEvaluatedApplications,updateIsEvaluated,getEvaluatedApplications,getRecruitercheckedEvaluations,getRecruiterUnCheckedEvaluations,getHMcheckedEvaluations,getHMUnCheckedEvaluations,updatecheckedrecruiter,updatecheckedhiringmanager,getcandidateforfinaldecision,gethiredCandidtaesList,getrejectedList,approvedjobPosting} = require('../controllers/evaluationController');
+      getEvaluation,getimg,getpost,getEvaCandidates,getNotEvaluatedApplications,updateIsEvaluated,getEvaluatedApplications,getRecruitercheckedEvaluations,getRecruiterUnCheckedEvaluations,getHMcheckedEvaluations,getHMUnCheckedEvaluations,updatecheckedrecruiter,updatecheckedhiringmanager,getcandidateforfinaldecision,gethiredCandidtaesList,getrejectedList,approvedjobPosting,getHMcheckedEvaluationsById,getHMUncheckedEvaluationsById} = require('../controllers/evaluationController');
 
 router.use(
     cors({
@@ -33,6 +33,8 @@ router.get('/getcandidateforfinaldecision',getcandidateforfinaldecision);
 router.get('/gethiredCandidtaesList',gethiredCandidtaesList);
 router.get('/getrejectedList',getrejectedList);
 router.get('/approvedjobPosting',approvedjobPosting);
+router.get('/getHMcheckedEvaluationsById/:job_id',getHMcheckedEvaluationsById);
+router.get('/getHMUncheckedEvaluationsById/:job_id',getHMUncheckedEvaluationsById);
 
 
 module.exports = router;
