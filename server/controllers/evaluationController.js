@@ -489,6 +489,46 @@ const getRecruiterUnCheckedEvaluationsbyID = async (req,res)=>{
 
 }
 
+const getcheckedevaluationsbyjobID = async (req,res)=>{
+  const job_id = req.params.job_id;
+  if(!job_id){
+    return res.status(400).json({error:"job_id query parameter is required"});
+  }
+  try{
+     const response = await Evaluationmodel.find({job_id});
+     if(response.length === 0){
+       console.log("No applications found that match the query conditions.");
+     }
+      res.json(response);
+  }
+  catch(error){
+    res.status(200).json({error:"server error"})
+    console.error('Error in getcheckedevaluationsbyjobID:', error); // Log the error for debugging
+  }
+
+
+}
+
+// const getApplicationsbyjobID = async (req,res)=>{
+//   const job_id = req.params.job_id;
+//   if(!job_id){
+//     return res.status(400).json({error:"job_id query parameter is required"});
+//   }
+//   try{
+//      const response = await Application.find({job_id,isjoined:true,isEvaluated:false},{ job_id: 1, user_id: 1, user_name: 1, user_email: 1, });
+//      if(response.length === 0){
+//        console.log("No applications found that match the query conditions.");
+//      }
+//       res.json(response);
+//   }
+//   catch(error){
+//     res.status(200).json({error:"server error"})
+//     console.error('Error in getApplicationsbyjobID:', error); // Log the error for debugging
+//   }
+
+
+// }
+
 module.exports={
   createEvalautions,
     // updateEvaluation,
@@ -512,5 +552,6 @@ module.exports={
     getHMcheckedEvaluationsById,
     getHMUncheckedEvaluationsById,
     getRecruitercheckedEvaluationsbyID,
-    getRecruiterUnCheckedEvaluationsbyID
+    getRecruiterUnCheckedEvaluationsbyID,
+    getcheckedevaluationsbyjobID
 }

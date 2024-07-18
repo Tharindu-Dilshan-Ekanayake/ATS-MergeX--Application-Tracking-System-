@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Topbar from "../../Components/hiringManagerCompo/Topbar.jsx";
 import PieCharts from "../../Components/hiringManagerCompo/PieCharts.jsx";
 import axios from "axios";
-import ProgressTimeline from "../../Components/hiringManagerCompo/ProgressTimeline.jsx";
+// import ProgressTimeline from "../../Components/hiringManagerCompo/ProgressTimeline.jsx";
 import HiringmanagerNav from "../../Components/hiringManagerCompo/HiringManagerNav";
 import { UserContext } from "../../Context/UserContext.js";
 import { toast } from "react-hot-toast";
@@ -42,11 +42,11 @@ export default function InterviewFeedback() {
   const clearuncheckedcandiatesbyId = () => {
     setUncheckedEvaluationsById([]);
     setUncheckedCandidatesById([]);
-  }
+  };
   const clearcheckedcandiatesbyId = () => {
     setCheckedEvaluationsbyId([]);
     setCheckedCandiatesByJobId([]);
-  }
+  };
 
   const [data, setData] = useState({
     candidatename: "",
@@ -432,7 +432,6 @@ export default function InterviewFeedback() {
     }
   }, [showEvaluated]);
 
-
   return (
     <div className="flex w-screen">
       <div className="fixed">
@@ -455,7 +454,6 @@ export default function InterviewFeedback() {
                 setShowApprovedjobPosting(false);
                 clearcandiates();
                 processCandidates();
-
               }}
             >
               View All Candidates
@@ -495,14 +493,15 @@ export default function InterviewFeedback() {
               </div>
             </div>
           </div>
-        ) : showallCandidates  ? (
+        ) : showallCandidates ? (
           <div
             className={`content  text-white flex flex-row p-[0px]    m-[30px]  h-fit rounded-[30px] 320px:text-[0.5rem]  450px:text-[0.8rem] sm:text-[0.9rem]   900px:text-[1.1rem]  1010px:text-[1.2rem]  ${
               showDetails === false ? " justify-center h-[85vh] " : null
             }`}
             // bg-[#212121]
           >
-          {!showDetails ? (<button
+            {!showDetails ? (
+              <button
                 className="absolute left-[360px] top-[120px] p-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid] w-[220px]"
                 onClick={() => {
                   setShowApprovedjobPosting(true);
@@ -513,7 +512,8 @@ export default function InterviewFeedback() {
                 }}
               >
                 Show Job Postings
-              </button>):(null)}
+              </button>
+            ) : null}
             {!showDetails ? (
               <div>
                 {!showEvaluated ? (
@@ -551,7 +551,7 @@ export default function InterviewFeedback() {
                 }`}
               >
                 <div className="h-[75vh] overflow-auto overflow-x-hidden">
-                  {showEvaluated  ? (
+                  {showEvaluated ? (
                     <div>
                       {checkedCandidates.map((candidate, index) => (
                         <button
@@ -939,16 +939,17 @@ export default function InterviewFeedback() {
           </div>
         ) : unchekedEvalautionsById.length === 0 ? (
           <div className=" ">
-          <button
-                className="absolute left-[360px] top-[120px] p-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid] w-[220px]"
-                onClick={() => {
-                  setShowApprovedjobPosting(true);
-                }}
-              >
-                Show Job Postings
-              </button>
-          <p className="my-[45vh] text-[#a3a3a3] text-center text-[28px] ">No evaluated Candidate Found</p>
-          
+            <button
+              className="absolute left-[360px] top-[120px] p-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid] w-[220px]"
+              onClick={() => {
+                setShowApprovedjobPosting(true);
+              }}
+            >
+              Show Job Postings
+            </button>
+            <p className="my-[45vh] text-[#a3a3a3] text-center text-[28px] ">
+              No evaluated Candidate Found
+            </p>
           </div>
         ) : (
           <div
@@ -957,7 +958,7 @@ export default function InterviewFeedback() {
             }`}
             // bg-[#212121]
           >
-            {!showApprovedjobPosting && !showDetails? (
+            {!showApprovedjobPosting && !showDetails ? (
               <button
                 className="absolute left-[360px] top-[120px] p-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid] w-[220px]"
                 onClick={() => {
@@ -974,15 +975,18 @@ export default function InterviewFeedback() {
                 {!showEvaluated ? (
                   <button
                     className="absolute right-[60px] top-[120px] p-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid]  w-[220px]"
-                    onClick={()=>{setshowEvaluatedtrue();}}
+                    onClick={() => {
+                      setshowEvaluatedtrue();
+                    }}
                   >
                     Show Checked Cadidates
                   </button>
                 ) : (
                   <button
                     className="absolute right-[60px] top-[120px] p-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid]  w-[220px]"
-                    onClick={()=>{setshowEvaluatedfalse();}}
-
+                    onClick={() => {
+                      setshowEvaluatedfalse();
+                    }}
                   >
                     Show Unchecked Cadidates
                   </button>
