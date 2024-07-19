@@ -341,6 +341,7 @@ export default function InterviewFeedback() {
         toast.success("Successsfully submitted.");
         updatecheckedHM(selected._id);
         setSubmitTrue();
+        setshowDetails(false);setShowApprovedjobPosting(true);
       }
     } catch (error) {
       console.error("Error updating evaluation:", error);

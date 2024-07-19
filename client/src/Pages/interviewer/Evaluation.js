@@ -29,6 +29,7 @@ export default function Evaluation() {
   const [checkedEvaluationsbyId, setCheckedEvaluationsbyId] = useState([]);
   const [checkedCandiatesByJobId, setCheckedCandiatesByJobId] = useState([]);
   const [clicked, setClicked] = useState(false);
+  const [jobID,setJobID] = useState("");
 
 
 
@@ -121,11 +122,11 @@ export default function Evaluation() {
         ...prevState,
         {
           _id,
-          userid: candidateid,
+          user_id: candidateid,
           username: candidatename,
           email: candidateemail,
           image: "", // initial placeholder value
-          post: position, // initial placeholder value
+          position: position, // initial placeholder value
         },
       ]);
       checkedgetImgByJobId(candidateid);
@@ -319,6 +320,8 @@ export default function Evaluation() {
         toast.success("Successfully submitted.");
         updateIsEvaluated(selected._id);
         console.log(data);
+
+        setshowDetails(false);setShowApprovedjobPosting(true);
       }
     } catch (error) {
       console.error(error);
@@ -342,6 +345,7 @@ export default function Evaluation() {
         console.log("Evaluations Updated Successfully");
         toast.success("Successfully updated.");
         updateIsEvaluated(selected._id);
+        setshowDetails(false);setShowApprovedjobPosting(true);
         
         
       }
@@ -476,11 +480,12 @@ export default function Evaluation() {
      
     
 
-  }, [showDetails, selected,application]);
+  }, [showDetails, selected,application,applicationsbyJobId,evaluatedApplication,checkedEvaluationsbyId]);
 
   const getCandidatesbyJobId= (job_id)=>{
     setApplicationsbyJobId( application.filter((application)=>application.job_id===job_id));
   }
+  
 
   useEffect(() => {
     if(showEvaluated){
@@ -533,21 +538,28 @@ useEffect(() => {
   getapprovedjobpostings();
 }, []);
 
+
+const applicationclearandget=()=>{
+  clearCandidates();
+  getApplications();
+}
+
   return (
-    <div>
+    <div className="overflow-hidden">
       <div className="flex w-screen">
         <div className="fixed">
           <InterviewNav />
         </div>
 
-        <div className="w-screen lg:ml-[320px] md:ml-72 ml-[260px]">
+        <div className="w-screen lg:ml-[320px] md:ml-72 ml-[260px] overflow-hidden">
           <Topbar
             msg="Interview Feedback"
             name="Piyushan"
             post="Hiring Manager"
           />
           
-        {showApprovedjobPosting?(<div
+        {showApprovedjobPosting?(
+          <div
             className={`content  text-white flex flex-row p-[0px]    m-[30px]  h-fit rounded-[30px] 320px:text-[0.5rem]  450px:text-[0.8rem] sm:text-[0.9rem]   900px:text-[1.1rem]  1010px:text-[1.2rem]  ${
               showDetails === false ? " justify-center h-[85vh] " : null
             }`}
@@ -586,6 +598,7 @@ useEffect(() => {
                           getCandidatesbyJobId(job._id);
                           clearcheckedcandiatesbyJobId();
                           getcheckedEvaluatuonsbyId(job._id);
+                          setJobID(job._id);
                           
                         }}
                         className="hover:scale-105 accLabel  my-[5px]  flex flex-row   bg-[#2b2b2b]  items-center   rounded-[30px]   esm:w-[110px] esm:h-[25px] 450px:w-[140px] 450px:h-[35px]    lg:rounded-[25px]  lg:gap-[12px] lg:h-[60px] sm:gap-[6px] sm:w-[180px] sm:h-[50px] sm:rounded-[30px] esm:w-[fit-content] lg:w-[500px]  m-[30px]"
@@ -1151,13 +1164,16 @@ useEffect(() => {
             </div>
           ) : null}
             
-          </div>):applicationsbyJobId.length === 0 ?(<div className=" ">
+          </div>):applicationsbyJobId.length === 0 ?(
+            <div className=" ">
             {!showDetails ? (    <div>
             <button
               className="absolute left-[360px] top-[120px] p-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid] w-[220px]"
               onClick={() => {
                 setShowApprovedjobPosting(true);
                 setClicked(false);
+                setcheckedfalse();
+                
               }}
             >
               Show Job Postings
@@ -1168,6 +1184,8 @@ useEffect(() => {
                     onClick={() => {
                       setcheckedtrue();
                       setClicked(true);
+                      applicationclearandget();
+                      setshowEvaluatedtrue();
                     }}
                   >
                     Show Evaluated Candidates
@@ -1178,6 +1196,8 @@ useEffect(() => {
                     onClick={() => {
                       setcheckedfalse();
                       setClicked(false);
+                      applicationclearandget();
+                      setshowEvaluatedfalse();
 
                     }}
                   >
@@ -1191,17 +1211,18 @@ useEffect(() => {
         />)} 
                 {!clicked ? ( <p className="my-[45vh] text-[#a3a3a3] text-center text-[28px] ">
               No Candidate Found to Evaluate
-            </p>):(<div
+            </p>):( 
+              <div
             className={`content  text-white flex flex-row p-[0px]    m-[30px]  h-fit rounded-[30px] 320px:text-[0.5rem]  450px:text-[0.8rem] sm:text-[0.9rem]   900px:text-[1.1rem]  1010px:text-[1.2rem]  ${
               showDetails === false ? " justify-center h-[85vh] " : null
             }`}
-            // bg-[#212121]
           >
             
-            
-            <div className="candidates  flex flex-col gap-[10px] bg-[#1E1E1E] rounded-[30px] esm:p-[10px] 450px:p-[15px] sm:p-[25px]  sm:w-auto 450px:w-[165px] 500px:w-[175px] esm:w-[140px]">
+            {checkedCandiatesByJobId.length === 0 ? (<p className="absolute top-[50%] left-[50%] text-[#a3a3a3] text-center text-[28px] ">
+              No Evaluated Candidate Found 
+            </p>):( <div className="candidates  flex flex-col gap-[10px] bg-[#1E1E1E] rounded-[30px] esm:p-[10px] 450px:p-[15px] sm:p-[25px]  sm:w-auto 450px:w-[165px] 500px:w-[175px] esm:w-[140px]">
               <p className="text-center text-[#FFFFFF] esm:p-[4px] 450px:p-[6px] sm:p-[10px] font-general-sans pt-[0px]">
-                Candidates
+                Evaluated Candidates
               </p>
               {/* <PostTag></PostTag> */}
               <div
@@ -1242,7 +1263,7 @@ useEffect(() => {
                                 {candidate.username}{" "}
                               </p>
                               <p className="post text-left text-[#ffffff] opacity-[30%]  mt-[-2px] md:mt-[-4px] text-[0.7rem] lg:text-[1rem]  md:text-[0.9rem] 320px:text-[0.5rem]">
-                                {candidate.post}
+                                {candidate.position}
                               </p>
                             </div>
                           </div>
@@ -1258,7 +1279,8 @@ useEffect(() => {
                     </div>
                 </div>
               </div>
-            </div>
+            </div>)}
+           
 
             {showDetails ? (
               <div className="description flex flex-col w-full box-border max-h-[800px] overflow-y-auto">
@@ -1578,7 +1600,7 @@ useEffect(() => {
                     {isexistevaluation === true ? (
                       <button
                         type="submit"
-                        onClick={updateEvaluation}
+                        onClick={(e)=>{updateEvaluation(e);  applicationclearandget();}}
                         className="items-center mt-5 esm:mr-[15%] sm:mr-[7%] md:mr-[6%] 900px:mr-[5%] 1010px:mr-[4%] bg-[#EA7122] esm:w-[50px] esm:h-[15px] 350px:w-[60px] 350px:h-[18px] 500px:w-[80px] 500px:h-[20px] sm:w-[100px] sm:h-[25px] md:w-[110px] md:h-[30px] 1010px:w-[120px] 1010px:h-[32px] 1300px:w-[125px] 1300px:h-[34px] xl:w-[130px] xl:h-[35px] rounded-[30px]"
                       >
                         Update
@@ -1586,7 +1608,7 @@ useEffect(() => {
                     ) : (
                       <button
                         type="submit"
-                        onClick={createEvaluation}
+                        onClick={(e)=>{createEvaluation(e); applicationclearandget()}}
                         className="items-center mt-5 esm:mr-[15%] sm:mr-[7%] md:mr-[6%] 900px:mr-[5%] 1010px:mr-[4%] bg-[#EA7122] esm:w-[50px] esm:h-[15px] 350px:w-[60px] 350px:h-[18px] 500px:w-[80px] 500px:h-[20px] sm:w-[100px] sm:h-[25px] md:w-[110px] md:h-[30px] 1010px:w-[120px] 1010px:h-[32px] 1300px:w-[125px] 1300px:h-[34px] xl:w-[130px] xl:h-[35px] rounded-[30px]"
                       >
                         Submit
@@ -1690,13 +1712,55 @@ useEffect(() => {
             ) : null}
           </div>)}
            
-          </div>):(     <div
+          </div>):(
+             <div
             className={`content  text-white flex flex-row p-[0px]    m-[30px]  h-fit rounded-[30px] 320px:text-[0.5rem]  450px:text-[0.8rem] sm:text-[0.9rem]   900px:text-[1.1rem]  1010px:text-[1.2rem]  ${
               showDetails === false ? " justify-center h-[85vh] " : null
             }`}
             // bg-[#212121]
           >
-            {!showApprovedjobPosting && !showDetails ? (
+
+          {checked ? (
+            <div> <button
+              className="absolute left-[360px] top-[120px] p-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid] w-[220px]"
+              onClick={() => {
+                setShowApprovedjobPosting(true);
+                setClicked(false);
+                setcheckedfalse();
+                applicationclearandget();
+                
+              }}
+            >
+              Show Job Postings
+            </button>  {!checked ? (
+                  <button
+                    className="absolute right-[60px] top-[120px] py-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid]  w-[220px]"
+                    onClick={() => {
+                      setcheckedtrue();
+                      setClicked(true);
+                      applicationclearandget();
+                      getcheckedEvaluatuonsbyId(jobID);setshowEvaluatedtrue();
+                    }}
+                  >
+                    Show Evaluated Candidates
+                  </button>
+                ) : (
+                  <button
+                    className="absolute right-[60px] top-[120px] py-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid]  w-[220px]"
+                    onClick={() => {
+                      setcheckedfalse();
+                      setClicked(false);
+                      applicationclearandget();
+                      getcheckedEvaluatuonsbyId(jobID);
+                      setshowEvaluatedfalse();
+     
+                    }}
+                  >
+                    Show Interview Candidates
+                  </button>
+                )}<p className="absolute top-[50%] left-[50%] text-[#a3a3a3] text-center text-[28px] ">
+              No Evaluated Candidate Found 
+            </p></div>):(<>{!showApprovedjobPosting && !showDetails ? (
               <button
                 className="absolute left-[360px] top-[120px] p-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid] w-[220px]"
                 onClick={() => {
@@ -1716,6 +1780,10 @@ useEffect(() => {
                     className="absolute right-[60px] top-[120px] p-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid]  w-[220px]"
                     onClick={() => {
                       setcheckedtrue();
+                      setClicked(true);
+                      applicationclearandget();
+                      getcheckedEvaluatuonsbyId(jobID);
+                      setshowEvaluatedtrue();
                     }}
                   >
                     Show Evaluated Candidates
@@ -1725,8 +1793,12 @@ useEffect(() => {
                     className="absolute right-[60px] top-[120px] p-[10px] rounded-[10px] border-[#EA7122] border-[5px] border-[solid]  w-[220px]"
                     onClick={() => {
                       setcheckedfalse();
-
+                      setClicked(false);
+                      applicationclearandget();
+                      getcheckedEvaluatuonsbyId(jobID);
+                      setshowEvaluatedfalse();
                     }}
+
                   >
                     Show Interviewing Cadidates
                   </button>
@@ -1799,7 +1871,6 @@ useEffect(() => {
                     </div>
                   ) : (
                     <div>
-                      {" "}
                       {candidatesbyjobId.map((candidate, index) => (
                         <button
                           key={index}
@@ -2167,7 +2238,7 @@ useEffect(() => {
                     {isexistevaluation === true ? (
                       <button
                         type="submit"
-                        onClick={updateEvaluation}
+                        onClick={(e)=>{updateEvaluation(e);  applicationclearandget();}}
                         className="items-center mt-5 esm:mr-[15%] sm:mr-[7%] md:mr-[6%] 900px:mr-[5%] 1010px:mr-[4%] bg-[#EA7122] esm:w-[50px] esm:h-[15px] 350px:w-[60px] 350px:h-[18px] 500px:w-[80px] 500px:h-[20px] sm:w-[100px] sm:h-[25px] md:w-[110px] md:h-[30px] 1010px:w-[120px] 1010px:h-[32px] 1300px:w-[125px] 1300px:h-[34px] xl:w-[130px] xl:h-[35px] rounded-[30px]"
                       >
                         Update
@@ -2175,7 +2246,7 @@ useEffect(() => {
                     ) : (
                       <button
                         type="submit"
-                        onClick={createEvaluation}
+                        onClick={(e)=>{createEvaluation(e);  applicationclearandget();}}
                         className="items-center mt-5 esm:mr-[15%] sm:mr-[7%] md:mr-[6%] 900px:mr-[5%] 1010px:mr-[4%] bg-[#EA7122] esm:w-[50px] esm:h-[15px] 350px:w-[60px] 350px:h-[18px] 500px:w-[80px] 500px:h-[20px] sm:w-[100px] sm:h-[25px] md:w-[110px] md:h-[30px] 1010px:w-[120px] 1010px:h-[32px] 1300px:w-[125px] 1300px:h-[34px] xl:w-[130px] xl:h-[35px] rounded-[30px]"
                       >
                         Submit
@@ -2277,7 +2348,12 @@ useEffect(() => {
               </div>
             </div>
             ) : null}
-          </div>)
+</>)}
+
+
+          </div>
+
+             )
           
           }
           
