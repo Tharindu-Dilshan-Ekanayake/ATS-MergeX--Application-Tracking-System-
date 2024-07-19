@@ -7,7 +7,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import {toast} from 'react-hot-toast';
 
-const FeedbackItem = ({ profile, name, date, position, userID, combinedData }) => {
+const FeedbackItem = ({ profile, name, userID, combinedData }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
@@ -101,7 +101,7 @@ const FeedbackItem = ({ profile, name, date, position, userID, combinedData }) =
     }
   };
 
-const handleClear = () => {
+  const handleClear = () => {
     setRating(0);
     setComment('');
   };
@@ -131,13 +131,13 @@ const handleClear = () => {
         </div>
         <div className='text-left -translate-x-24 max-w-44 min-w-44'> 
           <h1>{name}</h1>
-          <p className='text-sm opacity-50'>CANDIDATE</p>
+          <p className='text-sm opacity-50'>Candidate</p>
         </div>
         <div className='-translate-x-24 max-w-36 min-w-36'>
-          <p className='text-base opacity-50'>Date - {date}</p>
+          <p className='text-base opacity-50'>Date - {new Date(combinedData.interviewSchedule.date).toLocaleDateString()}</p>
         </div>
         <div className='-translate-x-20 max-w-32 min-w-32'>
-          <p className='text-base opacity-50'>{position}</p>
+          <p className='text-base opacity-50'>{combinedData.interviewSchedule.jobtitle}</p>
         </div>
         <div>
         {feedbackList.some(feedback => feedback.userId === userID) ? (
@@ -145,7 +145,6 @@ const handleClear = () => {
                 <button
                   key={feedback._id} // Assuming each feedback has a unique _id
                   className='w-52 h-14 bg-[#EA7122] text-lg rounded-3xl opacity-70'
-                  onClick={() => togglePopup(feedback)}
                 >
                   Update Feedback
                 </button>
@@ -173,9 +172,9 @@ const handleClear = () => {
                role = 'CANDIDATE'
               />
             </div>
-            <p className='mt-5 text-xl semi-bold'>Rate Your Expeirience</p>
+            <p className='mt-10 text-xl semi-bold'>Rate Your Expeirience</p>
             <p className='w-3/4 mx-auto mt-5 text-lg text-center'>We request you to share your feedback. This helps us to get the valuable point to the candidate</p>
-            <div className='mx-auto mt-5'>
+            <div className='mx-auto mt-10'>
             <StarRatings
                 rating={rating}
                 starRatedColor="#EA7122"
@@ -186,7 +185,6 @@ const handleClear = () => {
               />
             </div>
             <div className='flex flex-col items-center justify-start mt-8'>
-              <p className='text-left'>{combinedData.interviewSchedule.jobtitle}</p>
               <textarea
                 className="block px-4 py-2 mt-5 bg-white border border-white border-opacity-25 rounded resize-none bg-opacity-5"
                 placeholder="Enter your text here..."
